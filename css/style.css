@@ -1,127 +1,242 @@
-header{
-    background-color: #fffd92;
-}
-.index-header{
-    height: 100vh;
+/* GLOBALES */
+:root{
+    --colorAmarillo:#fffd92;
+    --colorTexto: #c31952;
 }
 
-h5,p, a, h2, h3{
-    color: #c31952!important;
+main{
+    background-color: #eaeae9;  
+    padding-top: 10PX;  
+}
+p, h2, h3, .link{
+    color: var(--colorTexto)!important;
     text-align: center;
     text-decoration: none;
 }
-.carousel-item > img{
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
+
+.full-screen{
+    height: 100vh;
 }
 
-.search-bar{
-    max-width: 500px!important;
+.bg-color{
+    background-color: var(--colorAmarillo)
 }
-
-.boton{
-    background: linear-gradient(145deg, #fffd92 0%, #eceb7e 100%);
-}
-
-/* HEADER */
-/* SECCION - BUSCAR COMIDA */
 .search-foot{
     margin-top: 1.5rem;
 }
 
-/* MAIN */
-/* SECCION - TARJETA DE COMIDA*/
-main{
-     background-color: #eaeae9;    
+.header-other-secction{
+    padding-bottom: 25px;
 }
-.tarjeta{
-    background-color: white;
-    width: 300px;
-    box-shadow: #d1d1d1 0px 1px 20px 1px;
-    border-radius: 10px;
-    margin: 10px;
-}
-.tarjeta img{
+
+.btn-menu-movil{
+    background-color: var(--colorTexto);
+    color: white;
     width: 100%;
-    object-fit: cover;
+    margin-bottom: .2rem;
 }
-.describcion-tarjeta{
-    background-color: #fffd92;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
+/******************** MEDIA QUERIS PC ************************/
+@media (min-width:768px){
+    /* CONFIGURACION-GLOBAL-MODO-PC */    
+    a, h5{
+        color: #c31952!important;
+    } 
+    .menu-modo-pc{
+        display:contents!important;
+    }
+    .menu-modo-movil{
+        display: none;
+    }
+
+    /* seccion slider del main */
+    .carousel-item > img{
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }
+    .nav-bar{
+        background-color:var(--colorAmarillo)!important;
+    }
+    .nav-bar ul li{
+        margin-right: 2rem;
+    } 
+
+    /* seccion de buscador   */
+    .search-bar{
+        max-width: 500px!important;
+    }
+
+    /* cadena de restaurantes y comida */
+    .tarjeta img{
+        width: 100%;
+        object-fit: cover;
+    }
+
+    #cadena-de-restaurantes, #foot-c-father{
+        display: flex;
+    }
+    .tarjeta{
+        width: 300px;
+        margin: 0 5px!important;
+    }
+
+    /* seccion -tabla ubicacioneS*/
+    .container-table-adress{
+        margin: 50px;
+    }
+    .encontrar-restaurante{
+        max-width: 80%;
+        margin: 0 auto;
+    }
+
+    .encontrar-restaurante{
+        width: 75%;
+    }
+
+    /**** PAGINA: DESCIPCION-COMIDA-HTML ****/
+    .flex-img-comdida{
+        flex-direction: row!important;
+    } 
+    
+    /**** PAGINA: PROCESAR-PAGO ****/
+    .container-pedido{
+        flex-direction: row!important;
+    }
+    .datos-de-pago{
+        width: 40%;
+    }
+    .separacion-margin{
+        padding-left: 20px;
+    }
+
+    .container-table-adress{
+        padding-bottom: 20px;
+    }
 }
 
-/* SECCION - TARJETA DE RESTAURANTES*/
-.restaurantes{
-    margin-top: 50px;
-}
 
-/* SECCION -TABLA UBICACIONES*/
-.container-table-adress{
-    margin: 50px;
-}
-.encontrar-restaurante{
-    max-width: 80%;
-    margin: 0 auto;
-}
-/* SECCION -FOORER*/
+/************************* MOBILE FIRST CONFIG **************/
+    /* menu amburguesa */
 
-.footer-section{
-    padding: 5px;
-    margin: 5px;
-}
+        .menu-modo-pc{
+            display: none; 
+        }
+        .menu-hamburguesa-icon{
+            width: 30px;
+        }
+        .nav-bar{
+            background-color: #c31952;   
+        }
+        .nav-item a{
+            color: white;
+            text-align: center;
+        }
 
-.col div>a{
-    color: rgb(24, 24, 24)!important;
-    font-weight: bold;
-}
+        /* slider */
+        .img-slider{
+            width: 100%;
+        }
 
-footer>.footer-redes-sociales{
-    background-color: rgb(14, 14, 14);
-    padding: 25px;
-}
-footer>.footer-redes-sociales > div > a{
-    margin-left: 25px;
-}
+    /* texto-bucar, buscador y btn bucar */
+
+    /* Catalogos de Comida, cadena de restaurantes */       
+       .tarjeta{
+           background-color: white;
+           width: 90%;
+           box-shadow: #d1d1d1 0px 1px 20px 1px;
+           border-radius: 10px;
+           margin: 20px auto;
+       }
+
+       .tarjeta img{
+        width: 100%;
+        object-fit: cover;
+       }
+       
+       .describcion-tarjeta{
+           background-color: #fffd92;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 2.5rem;
+       }
+        .describcion-tarjeta h5{
+            color: var(--colorTexto);
+        }
+        
+        .restaurantes{
+            margin-top: 50px;
+        }
 
 
-/* CPAGINA DE COMPRAR */
-.container-pedido{
-    padding: 25px 0;
-}
-.enlace{
-   text-decoration:underline;
-}
+    /* seccion -tabla ubicacioneS*/
+        .encontrar-restaurante{
+            max-width: 90%;
+            margin: 0 auto;
+        }
 
-/* PAGINA DE INFO DE RESTAURANTE INDIVIDUAL */
+     /* SECCION -FOOTER - Part 1*/
+        .footer-section{
+            padding: 5px;
+            margin: 5px;
+        }
 
-video{
-    max-width: 100%;    
-    object-fit: cover;
-}
+        .col div>a{
+            color: rgb(24, 24, 24)!important;
+            font-weight: bold;
+            font-size: 1rem;
+        }
 
-.main-menu-desplegable{
-    padding-top: 1.5rem;
-}
+        /* SECCION -FOOTER - Part 2*/
+        footer>.footer-redes-sociales{
+            background-color: rgb(14, 14, 14);
+            padding: 25px;
+        }
+        footer>.footer-redes-sociales > div > a{
+            margin-left: 25px;
+        }
 
-/* SECCION DE PAGO */
-.datos-de-pago{
-    width: 40%;
-}
+/**** PAGINA: DESCIPCION-COMIDA-HTML ****/
+    .flex-img-comdida{
+        flex-direction: column;
+        align-items: center;
+    }  
+    
+    @media (max-width:768px){
+        .col-6{
+            width:max-content;
+        }
+    }
 
-.separacion-margin{
-    padding-left: 20px;
-}
+ /****** CPAGINA DE COMPRAR ********/
+    .container-pedido{
+        padding: 25px 0;
+    }
+    .enlace{
+    text-decoration:underline;
+    }
 
-.container-table-adress{
-    padding-bottom: 20px;
-}
+/****** PAGINA DE INFO DE RESTAURANTE INDIVIDUAL *******/
 
-/* LOGIN */
+    video{
+        max-width: 100%;    
+        object-fit: cover;
+    }
 
-.iniciar-sesion{
-    margin:0 auto;
-}
+    .main-menu-desplegable{
+        background-color: #c31952b4;
+    }
+    div.card-body{
+        text-align: center;
+    }
+
+/******** SECCION DE PAGO ********/
+    .container-pedido{
+        flex-direction: column;
+        align-items: center;
+    }
+
+/*/******** LOGIN ********/*/
+    .iniciar-sesion{
+        margin:0 auto;
+    }

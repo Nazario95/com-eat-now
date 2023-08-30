@@ -1,80 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 </head>
 <body>
-    <header>
+    <header class="bg-color header-other-secction">
         <!-- inyectado desde js -->
     </header>  
 
     <main>
         <div class="main-menu-desplegable">
-            <h2 class=" fs-1 fw-bolder">MIRA EL MENU DE <a class="enlace" href="#">GALABO</a> Y PRUBEA ALGO NUEVO</h2>
+            <!-- menu para pc -->
+            <div class="menu-modo-pc">
+                <h2 class=" fs-1 fw-bolder">MIRA EL MENU DE <a class="enlace link" href="#">GALAMBO</a> Y PRUBEA ALGO NUEVO</h2>
+    
+                <nav class="navbar navbar-expand-lg bg-light container container-fluid">
+    
+                    <div class="container-fluid">
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                 Tu Desayuno
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Huevos con Leche</a></li>
+                                  <li><a class="dropdown-item" href="#">Bocadillos</a></li>
+                                  <li><a class="dropdown-item" href="#">Desayuno Personalizado</a></li>
+                                </ul>                        
+                            </li>  <!--  Fin Menu Desayuno-->
+                        </ul>   
+                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                 Combo para llevar a Casa
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Alitas➕refrescos</a></li>
+                                  <li><a class="dropdown-item" href="#">Pizza➕zumo➕patatas</a></li>
+                                  <li><a class="dropdown-item" href="#">Pechuga de Pollo➕Pan de queso</a></li>
+                                </ul>                        
+                            </li>  <!--  Fin Menu Combo-->
+                        </ul> 
+    
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                 Helados
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Premium, Rico y Delicioso</a></li>
+                                  <li><a class="dropdown-item" href="#">Economico y en Cantidad</a></li>
+                                </ul>                        
+                            </li>  <!--  Fin Menu Helados-->
+                        </ul> 
+    
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                 Bebidas
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Refrescos</a></li>
+                                  <li><a class="dropdown-item" href="#">Te y Caffe</a></li>
+                                  <li><a class="dropdown-item" href="#">Vino y Licores</a></li>
+                                </ul>                        
+                            </li>  <!--  Fin Menu Desayuno-->
+                        </ul> 
+                      </div>
+                    </div>
+    
+                  </nav>
+            </div><!-- fin menu desplegable pc -->
 
-            <nav class="navbar navbar-expand-lg bg-light container">
-
-                <div class="container-fluid">
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
-                             Tu Desayuno
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Huevos con Leche</a></li>
-                              <li><a class="dropdown-item" href="#">Bocadillos</a></li>
-                              <li><a class="dropdown-item" href="#">Desayuno Personalizado</a></li>
-                            </ul>                        
-                        </li>  <!--  Fin Menu Desayuno-->
-                    </ul>   
-                    
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
-                             Combo para llevar a Casa
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Alitas➕refrescos</a></li>
-                              <li><a class="dropdown-item" href="#">Pizza➕zumo➕patatas</a></li>
-                              <li><a class="dropdown-item" href="#">Pechuga de Pollo➕Pan de queso</a></li>
-                            </ul>                        
-                        </li>  <!--  Fin Menu Combo-->
-                    </ul> 
-
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
-                             Helados
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Premium, Rico y Delicioso</a></li>
-                              <li><a class="dropdown-item" href="#">Economico y en Cantidad</a></li>
-                            </ul>                        
-                        </li>  <!--  Fin Menu Helados-->
-                    </ul> 
-
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
-                             Bebidas
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Refrescos</a></li>
-                              <li><a class="dropdown-item" href="#">Te y Caffe</a></li>
-                              <li><a class="dropdown-item" href="#">Vino y Licores</a></li>
-                            </ul>                        
-                        </li>  <!--  Fin Menu Desayuno-->
-                    </ul> 
+            <div class="menu-modo-movil">               
+                <div class="menu menu-desayuno">
+                    <a class="btn btn-outline-dange btn-menu-movil" data-bs-toggle="collapse" href="#menu-desayuno" role="button" aria-expanded="false" aria-controls="menu-desayuno">
+                        Tu Desayuno
+                  </a>
+                 
+                  <div class="collapse" id="menu-desayuno">
+                      <div class="card card-body">
+                       <a href="#">Huevos con Leche</a>
+                       <a href="#">Bocadillos</a>
+                       <a href="#">Desayuno Personalizado</a>
+                      </div>
                   </div>
                 </div>
+                <div class="menu menu-combo">
+                    <a class="btn btn-outline-dange btn-menu-movil" data-bs-toggle="collapse" href="#menu-combo" role="button" aria-expanded="false" aria-controls="menu-combo">
+                        Combo para llevar a Casa
+                    </a>
+                 
+                    <div class="collapse" id="menu-combo">
+                      <div class="card card-body">
+                       <a href="#">Alitas ➕ Refrescos</a>
+                       <a href="#">Pizza ➕ Zumo ➕ Patatas</a>
+                       <a href="#">Pechuga de Pollo ➕ Pan de Queso</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="menu menu-helados">
+                    <a class="btn btn-outline-dange btn-menu-movil" data-bs-toggle="collapse" href="#menu-helados" role="button" aria-expanded="false" aria-controls="menu-helados">
+                        Tu Desayuno
+                  </a>
+                 
+                  <div class="collapse" id="menu-helados">
+                      <div class="card card-body">
+                       <a href="#">Premium, Rico y Delicioso</a>
+                       <a href="#">Economico y en Cantidad</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="menu menu-bebidas">
+                    <a class="btn btn-outline-dange btn-menu-movil" data-bs-toggle="collapse" href="#menu-bebidas" role="button" aria-expanded="false" aria-controls="menu-bebidas">
+                       Bebidas
+                  </a>
+                 
+                  <div class="collapse" id="menu-bebidas">
+                      <div class="card card-body">
+                       <a href="#">Refrescos</a>
+                       <a href="#">Te y Caffe</a>
+                       <a href="#">Vino y Licores</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
 
-              </nav>
-        </div>
+        </div>      
 
         <div class="restaurantes">
             <div class="container text-center">
