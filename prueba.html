@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seccion de pruebas</title>
+</head>
+<body>
+    <button class="vibrar">Vibrar</button> 
+    <script>
+        let vibracion = document.querySelector('.vibrar');
+        vibracion.addEventListener('pointerdown', ()=>{
+           
+            window.navigator.vibrate(3000);
+            
+        })
+    </script>
+      <script src="./prueba.js" type="module"></script>    
+</body>
+</html>

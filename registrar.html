@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head></head>
+<body>
+    <script src="./css/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/toastr.min.css">
+    <script src="./css/toastr.min.js"></script>
+
+    <header class="bg-color header-other-secction">
+
+    </header>
+    
+        <main class="full-screen">
+            <form id="registro" class="container registro py-3">
+                <div class="mb-3">
+                    <label for="nomre" class="nombre">nombre del restaurante</label>
+                    <input required type="text" class="form-control" id="nombre"  data-titulo="nombre del restaurante">
+                  </div>
+    
+                <div class="mb-3">
+                  <label for="correo" class="correo">correo del restaurante</label>
+                  <input required type="email" class="form-control" id="correo" data-titulo="correo electronico" placeholder="@negocio.com">
+                </div>
+    
+                <div class="mb-3 d-flex ">
+                    <select required class="form-select ciudad">
+                        <option selected>provincia</option>
+                        <option value="bioko norte">Bioko Borte</option>
+                        <option value="bioko sur">Bioko Sur</option>
+                        <option value="litoral">Litoral</option>
+                    </select>
+    
+                    <select required class="form-select bario" >
+                        <option selected>ciudad</option>
+                        <option value="malabo">Malabo</option>
+                        <option value="baney">Baney</option>
+                        <option value="bata">Bata</option>
+                    </select>
+                </div>
+                    <div class="mb-3">
+                        <label for="bario" class="correo">Calle o Zona de Residencia</label>
+                        <input required type="text" class="form-control" id="bario" data-titulo="zona de ubicacion del restaurante">
+                    </div>
+               
+                    <div class="mb-3">
+                        <label for="tel" class="correo">Telefono de Empresa o Negocio</label>
+                        <input required type="number" class="form-control" id="tel" data-titulo="telefono del restaurante">
+                    </div>
+              
+                    <div class="d-flex justify-content-end ">
+                        <button id="actualizar" type="submit" class="btn btn-danger">Registrar</button>                        
+                    </div>
+            </form>
+        </main>
+  
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./app.js" type="module"></script>
+    <script src="./js/mensajes-alerta.js" type="module"></script>  
+    <script src="./js/session.js" type="module"></script>    
+    <script src="./js/registrar-negocio.js" type="module"></script>   
+</body>
+</html>

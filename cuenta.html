@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>     
+    <link rel="stylesheet" href="./css/toastr.min.css">    
+    <header class="bg-color header-other-secction"></header>
+
+    <main class="full-screen">
+        <div>
+            <p class="fw-bold">ID DE USUARIO: <span id="user-id">XXXXXXXXXXXXX</span></p>
+            <p class="fw-bold text-center">La informacion de tu perfil nos ayuda a traerte tu paquete a hasta casa</p>
+
+            <form id="datos-usuario" class="container registro">
+                <div class="mb-3">
+                    <input autocomplete="off" type="text" class="form-control" id="nombre" placeholder="Nombre">
+                </div>
+
+                <div class="mb-3">
+                    <input autocomplete="off"  type="text" class="form-control" id="apellidos" placeholder="Appelidos">
+                </div>
+    
+                <div class="mb-1">
+                    <input autocomplete="off" type="email" class="form-control" id="correo" placeholder="Correo">
+                </div>
+
+                Datos de ubicacion 
+                <div class="mb-3 d-flex ">                    
+                    <select required class="form-select" id="provincia">
+                        <option selected>provincia</option>
+                        <option value="bioko-norte">Bioko-Norte</option>
+                        <option value="bioko-sur">Bioko Sur</option>
+                        <option value="litoral">Litoral</option>
+                    </select>
+    
+                    <select required class="form-select" id="ciudad">
+                        <option selected>ciudad</option>
+                        <option value="malabo">Malabo</option>
+                        <option value="baney">Baney</option>
+                        <option value="bata">Bata</option>
+                    </select>
+                </div>
+                    <div class="mb-3">
+                        <input  autocomplete="off" type="text" class="form-control" id="residencia" placeholder="Zona o Residencia">
+                    </div>
+            
+                    <div class="mb-3">
+                        <input  autocomplete="off"  type="number" class="form-control" id="contacto" placeholder="Numero de Telefono">
+                    </div>
+                    <div class="d-flex justify-content-end aling-item-center">
+                        <p class="px-3">Quieres registrar tu negocio? <a href="./registrar.html" class="text-decoration-underline">click aqui</a></p>
+                        <button id="actualizar" type="button" class="btn btn-danger text-end">
+                            Actualizar
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </main>
+
+     
+    <script src="./css/jquery.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./app.js"  type="module"></script> 
+    <script src="./js/session.js"  type="module"></script>    
+    <script src="./templetes/header-footer.js"  type="module"></script> 
+    <script src="./css/toastr.min.js"></script>  
+</body>
+</html>

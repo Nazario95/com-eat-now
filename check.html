@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Aut</title>
+    <style>
+        body{
+            background-color: #fffd92;
+        }
+        .prop{
+            display: flex;           
+        }
+        .prop,p{
+            margin: 0;
+            padding: 0;
+        }
+        #respuesta{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <span id="actualizar" class="sign-in_btn"></span>
+    <div class="prop">
+        <h2 id="respuesta">REDIRECCIONANDO...</h2><img src="./src/img/load.svg" alt="">
+    </div>
+    <P id="mensaje">Si esta pagina no le redirecciona al panel de administracion, recargue la pagina</P>
+    
+    <script src="./js/check.js" type="module"></script>
+</body>
+</html>

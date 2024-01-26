@@ -3,29 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
     <link rel="stylesheet" href="./config/normalize.css" type="mime">
     <link rel="stylesheet" href="./css/all.min.css">  
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">   
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./css/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/toastr.min.css">
+    <script src="./css/toastr.min.js"></script>
     <title>just-eat</title>
 </head>
 <body>
 
 <div class="contenedor-principal grid"><!-- contenedor-principal  -->
   <div class="row"><!-- contenedor-header -->
-    <header class="full-screen bg-color">
+    <header class="bg-color">
     <div class="nav nav-bar justify-content-center shadow-sm p-3 mb-5">
         <ul class="nav  menu-modo-pc nav-underline">
+
+          <li class="nav-item"><!-- modal de buscar restaurante favorito -->
+
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Encuentra tu restaurante aqui
+              </button>
+    
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Encuentra tu restaurante favorito aqui</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">   
+                      <form class="">
+                          <div class="mb-3">
+                            <label for="barra-buscador-restaurante" class="form-label">Escribe el nombre aqui</label>
+                            <input type="text" id="barra-buscador-restaurante" class="form-control buscar-restaurante">
+                          </div>                   
+                          <button type="submit" class="btn btn-danger btn-buscar-restaurante">Buscar</button>  
+                            <br>    <br>                    
+                          <div class="resultados-busqueda"></div>   
+                      </form>
+                    </div>               
+                  </div>
+                </div>
+              </div>
+              
+          </li><!-- fin del modal de buscar restaurante favorito -->          
           <li class="nav-item">
-            <a class="nav-link" href="#">Busca tu restaurente favorito</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.html">Iniciar Sesion</a>
-          </li>
+           <div id="modal-login"  class="existe-sesion"></div><!-- inyeccion-ventana-modal -->  
+          </li> 
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>
-          </li>
+          </li>        
         </ul>
 
       <div class="menu-modo-movil">
@@ -37,20 +66,50 @@
         <div class="collapse" id="collapseExample">
           <div class="">
             <ul class="nav d-block nav-underline">
+
               <li class="nav-item ">
-                <a class="nav-link" href="#"><h5>Busca tu restaurente favorito</h5></a>
+                <!-- <a class="nav-link" href="/resultados-busqueda.html"><h5>Busca tu restaurente favorito</h5></a> -->
+
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-2">
+                  Encuentra tu restaurante aqui
+                </button>
+      
+                <div class="modal fade" id="exampleModal-2" tabindex="-1" aria-labelledby="exampleModalLabe2" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabe2">Encuentra tu restaurante favorito aqui</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">   
+                        <form class="">
+                            <div class="mb-3">
+                              <label for="barra-buscador-restaurante-2" class="form-label">Escribe el nombre aqui</label>
+                              <input type="text" id="barra-buscador-restaurante-2" class="form-control buscar-restaurante-movil">
+                            </div>                   
+                            <button type="submit" class="btn btn-danger btn-buscar-restaurante2">Buscar</button>  
+                              <br>    <br>                    
+                            <div class="resultados-busqueda-movil">
+                              
+                            </div>   
+                        </form>
+                      </div>               
+                    </div>
+                  </div>
+                </div>
+
+              </li>
+              
+              <li class="nav-item existe-sesion">
+                <a class="nav-link" href="./login.html"><h5 class="txt-color-phone-mode">Iniciar Sesion</h5></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./login.html"><h5>Iniciar Sesion</h5></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><h5>Ayuda</h5></a>
+                <a class="nav-link" href="#"><h5 class="txt-color-phone-mode">Ayuda</h5></a>
               </li>
             </ul>
           </div>
         </div>
       </div><!-- menu-hamburguesa -->
-
     </div><!-- . End Nav-bar -->
       
       <div id="carouselExample" class="carousel slide shadow-sm p-1 mb-5">
@@ -72,41 +131,35 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div><!--. End, carusell header  -->
+      </div><!--. End, carusell header  -->
 
         <div class="search-foot ">
           <h2 class=" fs-1 fw-bolder">PIDE TU COMIDA A DOMICILIO</h2>
           <form class="d-flex justify-content-center" role="search">
-            <input class=" search-bar form-control" type="search" placeholder="Que te Gustaria Comer">
-            <button class="btn btn-outline-danger" type="submit" style="margin-left: 5px; background-color: #c31952; color: white;">Buscar</button>
+            <input class=" search-bar form-control input-comida" type="search" placeholder="Que te Gustaria Comer">
+            <button id="buscar-comida" class="btn btn-outline-danger" type="submit" style="margin-left: 5px; background-color: #c31952; color: white; ">Buscar</button>
           </form>
         </div><!--. End, bar-seach-food-->
     </header>
   </div><!-- fin.contenedor-header -->
-
+<a href="http://"></a>
   <div><!-- contenedor-main -->
     <main> 
       <div class="slider-catalogos-restaurantes container">
-        <div class="slider-catalogos">
+      
+        <!-- ultimos agregados -->
+        <div class="slider-ultimos-agregados">   
+
+        </div><!------- fin. ultimos agregados -->        
+
+        <div class="slider-catalogos">          
+          <!------- categorias de comidas -------->
           <h2>EXPLORA NUESTRO CATALOGO DE COMIDAS</h2> 
-          <a href="./descipcion-comida.html">
+          
             <div class="menu-modo-movil">
-                <div class="justify-content-center">              
-                  <div class=" tarjeta componente-tarjeta"><img src="./src/img/comida-fang/1.png">
-                      <div class="describcion-tarjeta"><p>Comida Fang</p></div>
-                  </div>
-                  
-                  <div class=" tarjeta componente-tarjeta"><img src="./src/img/comida-fang/2.png">
-                      <div class="describcion-tarjeta"><p>Comida Bubi</p></div>
-                  </div>
-                  
-                  <div class=" tarjeta componente-tarjeta"><img src="./src/img/comida-fang/3.png">
-                      <div class="describcion-tarjeta"><p>Comida Anobonesa</p></div>
-                  </div>
-                  
-                  <div class=" tarjeta componente-tarjeta"><img src="./src/img/comida-fang/4.png">
-                      <div class="describcion-tarjeta"><p>Comisa Senegalesa</p></div>
-                  </div>
+                <div class="justify-content-center explorar-categorias">  
+                  <h4>Cargando categorias</h4>
+                  <img src="./src/img/load.svg" alt="">
               </div>
             </div><!-- fin. Contenido Movil -->
 
@@ -116,44 +169,23 @@
               </div>
             </div><!-- fin. Contenido PC -->
             
-          </a>
-        </div>
+         
+        </div><!------- fin.categorias de comidas -------->
         
         <div class="restaurantes">
           <h2>CADENAS DE RESTAURANTES</h2> 
           <p>Conoce los Platos Mas Destacados de los Siguientes Sitios</p>
-          <a href="./menu-restaurante.html" target="_blank">
-            
-            <div class="menu-modo-movil">
+         
               <div class="justify-content-center">
-                <div  class="justify-content-center">
+                <div  class="justify-content-center cadena-de-restaurantes">
                   <div class="tarjeta componente-tarjeta d-block">
                       <img src="./src/img/cadena-restaurantes/1.png">
                       <div><p>Galambo</p></div>
-                  </div>  
-                  <div class="tarjeta componente-tarjeta d-block">
-                      <img src="./src/img/cadena-restaurantes/2.png">
-                      <div><p>Pizza Place</p></div>
-                  </div>  
-                  <div class="tarjeta componente-tarjeta d-block">
-                      <img src="./src/img/cadena-restaurantes/3.png">
-                      <div><p>Restaurente hilton</p></div>
-                  </div>  
-                  <div class="tarjeta componente-tarjeta d-block">
-                      <img src="./src/img/cadena-restaurantes/4.png">
-                      <div><p>La Bola</p></div>
-                  </div>
+                  </div>   
+                 
               </div>
-              </div>
-            </div><!-- fin. Componente Movil -->
-
-            <div class="menu-modo-pc">
-              <div id="cadena-de-restaurantes" class="justify-content-center">
-                <!-- .Componentes de restaurante Inyectados  via js -->
-              </div><!-- fin. Componente PC -->
             </div>
-            
-          </a>
+        
         </div><!-- .End Cadena de restaurantes -->
       </div>   
 
@@ -231,11 +263,21 @@
       </div>
     </footer>
   </div><!-- fin.contenedor-footer -->
-      <script src="./js/bootstrap.bundle.min.js"></script>
-      <script src="./templetes/footer-slider.js"></script>
-      <script src="./templetes/main-component.js" type="module"></script>
-      <script src="./app.js" type="module"></script>
+  <span id="actualizar"></span>
 
+      <script src="./js/bootstrap.bundle.min.js"></script>
+      <script src="./templetes/carusel-slider.js" type="module"></script>
+      <script src="./app.js" type="module"></script> 
+      <!-- <script src="./js/fileManager.js" type="module"></script>  -->
+      <script src="./templetes/main-component.js" type="module"></script>
+      <script src="./js/session.js" type="module"></script>          
+      <script src="./templetes/header-footer.js" type="module"></script>
+      <script src="./templetes/exportfile.js" type="module"></script>
+      <script src="./js/fire_db_actions.js" type="module"></script>
+      <script src="./js/app-smart-search.js" type="module"></script>  
+        
+  
   </div>  <!-- .fin contenedor-principal -->
 </body>
 </html>
+

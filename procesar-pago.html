@@ -4,86 +4,118 @@
   
 </head>
 <body>
+    <script src="./css/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/toastr.min.css">
+    <script src="./css/toastr.min.js"></script>
+    
     <header class="bg-color header-other-secction"></header>
     <main>
         <div class="container d-flex justify-content-center container-pedido">
-            <div class="datos-de-pago separacion-margin shadow-sm p-3 mb-5 bg-body rounded">
-                <form action="realizando-pago.html">
-                    <div class="mb-2">
-                      <input type="text" class="form-control" placeholder="Nombre Completo">              
-                    </div>
-                    <div class="mb-2">             
-                      <input type="text" class="form-control" placeholder="Numero de tTlefono o Correo">
-                    </div>
-                    <div class="mb-2">             
-                        <div class="d-flex">
-                            <select class="form-select" aria-label="Default">
-                                <option selected>Provincia</option>
-                                <option value="1">Bioko Norte</option>
-                                <option value="2">Litoral</option>
-                                <option value="3">Wele-Nzas</option>
-                            </select>
-                            <select class="form-select" aria-label="Default">
-                                <option selected>Ciudad</option>
-                                <option value="1">Malabo</option>
-                                <option value="2">Bata</option>
-                                <option value="3">Monogomo</option>
-                            </select>
-                            <select class="form-select" aria-label="Default">
-                                <option selected>Bario</option>
-                                <option value="1">Buena Esperanza</option>
-                                <option value="2">Bikuy</option>
-                                <option value="3">Monogomo</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-2">             
-                        <select class="form-select" aria-label="Default">
-                            <option selected>Seleciona el Metodo de Pago</option>
-                            <option value="1">Tarjeta de Credito</option>
-                            <option value="2">B-Mori</option>
-                            <option value="3">Rosa Money</option>
-                            <option value="3">Muni Dinero</option>
-                            <option value="3">Ecobank App Pay</option>
-                            <option value="3">BGF-Bank Pay Transfer</option>
-                            <option value="3">Cash</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">             
-                        <span>Introducir Datos de La Tarjeta</span>
-                        <input type="number" class="form-control mb-2" placeholder="Numero de la Tarjeta">
-                        <input type="text" class="form-control mb-2" placeholder="Titual de la Tarjeta">
-                        <div class="d-flex">
-                            <input type="date" class="form-control" placeholder="Fecha de Expiracion">
-                            <input type="password" class="form-control" placeholder="CCV">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Realizar Pago</button>
-                </form> 
-            </div> <!-- datos de pago -->
 
             <div class="separacion-margin">
-                <div class="card" style="width: 18rem;">
-                    <img src="./src/img/check-out/1.jpg" class="card-img-top">
-                    <div class="card-body">
-                      <h5 class="card-title">Arroz Tres Delicias</h5>
-                      <p class="card-text">Arroz Perfumado, langostinos, Maiz, etc</p>
-                      <span>5.000CFA</span>
+                
+                <div class="card componenete-factura" style="width: 22rem;">
+                    
+                    <img class="card-img-top">
+                    
+                    <div class="card-body">                        
+                            <table class="table tabla-fatura solo-carrito">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Plato</th>
+                                  <th scope="col">Precio</th>
+                                  <th scope="col">Cantidad</th>
+                                  <th scope="col">Total</th>
+                                </tr>
+                              </thead>
+                              <tbody class="factura-carrito">                  
+                                <!-- inyeccion de tabla carrito -->
+                              </tbody>
+                            </table>   
+                        <div class="solo-individual m-0 p-0">
+                            <h5 class="card-title">Cargando datos...</h5>
+                            <p class="card-text"><img src="./src/img/load.svg"></p>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><p>TOTAL</p><h3>5000 CFA</h3></li>
+
+                    <ul class="list-group list-group-flush solo-individual">
+                      <li class="list-group-item"><img src="./src/img/load.svg"></h3></li>
                     </ul>
-                    <div class="card-body">
-                      <a href="#" class="card-link">Guardar Al Carito</a>
-                      <a href="#" class="card-link">Añadir Nuevo </a>
+                    <div class="card-body solo-individual">
+                      <a href="#" class="card-link">Cancelar</a>
+                      <a href="#" class="card-link">Añadir al carrito</a>
                     </div>
                   </div>
             </div><!-- datos del elemento comrado -->
+
+            <div class="datos-de-pago separacion-margin shadow-sm p-3 mb-5 bg-body rounded">
+                <p>Los datos solicitados a continuacion nos ayudaran a ponernos en contacto con usted, asi como poder determinar la ubicacion en donde llevar el pedido. Gracias</p>
+                <form action="realizando-pago.html" id="realizar-pago">
+                    <div class="mb-2">
+                      <input type="text" class="form-control" placeholder="Nombre Completo (opcional)">              
+                    </div>
+                    <div class="mb-2">             
+                      <input type="number" class="form-control" placeholder="Numero de telefono">
+                    </div>
+
+                    <label for="a-domicilio" class="rojo">Quieres recibir a domicilio?</label>
+                    <input type="checkbox" id="a-domicilio" name="a-domicilio">
+
+                    <div class="mb-2">             
+                        <div class="d-flex">
+                            <select class="form-select ubicacion" aria-label="Default" disabled>
+                                <option selected>Provincia</option>
+                                <option>Bioko Norte</option>
+                                <option>Litoral</option>
+                                <option>Wele-Nzas</option>
+                            </select>
+                            <select class="form-select ubicacion" aria-label="Default" disabled>
+                                <option selected>Ciudad</option>
+                                <option>Malabo</option>
+                                <option>Bata</option>
+                                <option>Monogomo</option>
+                            </select>
+                            <select class="form-select ubicacion" aria-label="Default" disabled>
+                                <option selected>Bario</option>
+                                <option>Buena Esperanza</option>
+                                <option>Bikuy</option>
+                                <option>Monogomo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2">     
+                        <span class="rojo">Seleciona el Metodo de Pago</span>    
+                        <select class="form-select pago" aria-label="Default">                            
+                            <option value="cash" selected>Cash</option>
+                            <option value="card" disabled>Tarjeta de Credito</option>
+                            <option value="mori" disabled>B-Mori</option>
+                            <option value="rosa" disabled>Rosa Money</option>
+                            <option value="muni" disabled>Muni Dinero</option>
+                            <option value="ecobank" disabled>Ecobank App Pay</option>
+                            <option value="bgf" disabled>BGF-Bank Pay Transfer</option>                           
+                        </select>
+                    </div>
+                    <div id="pay-method">
+                        
+                    </div>
+                    <div>
+                        <h3>Total: <span class="total-carito"><img class="solo-individual" src="./src/img/load.svg"></span></h3>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-danger">Realizar Pedido</button>
+                    </div>
+                </form> 
+            </div> <!-- datos de pago -->
+
+            
         </div><!-- FIN FACTURA DE PAGO          -->
     </main>
-
+    <span id="actualizar"></span>
     <footer></footer>
     <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./templetes/header-footer.js"></script>
+    <script src="./app.js" type="module"></script>
+    <script src="./js/session.js" type="module"></script> 
+    <script src="./js/app-smart-search.js" type="module"></script> 
+    <script src="./js/procesar-pagos.js" type="module"></script>   
 </body>
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head></head>
+<body class="res-bg-color">
+  <link rel="stylesheet" href="./css/componenetes.css">
+  <script src="./css/jquery.min.js"></script>  
+  <link rel="stylesheet" href="./css/toastr.min.css">
+  <script src="./css/toastr.min.js"></script>
+  <script src="./app.js" type="module"></script>
+  
+  <header class="bg-color">
+    <h2 class=" fs-1 fw-bolder">QUE TE GUSTARIA COMER</h2>
+      <form class="d-flex justify-content-center buscador" role="search">
+        <input class=" search-bar form-control input-comida" type="search" placeholder="Busca tu plato favorito aqui">
+        <button id="buscar-comida" class="btn btn-outline-danger" type="submit" style="margin-left: 5px;background-color: #c31952; color: white;">Buscar</button>
+      </form>
+  </header>
+  <main>
+    <div>
+    
+      <div class="container">
+        <h2 class=" fs-1 fw-bolder">AQUI TIENES ALGUNOS RESULTADOS DE <a class="tu-busqueda" href="#"></a></h2>
+        <br>
+        <div class="resultados-de-busqueda container">
+          
+            <div>
+              <h2 style="min-width: max-content;">Espere porfavor <img src="./src/img/load.svg"></h2>
+            </div>              
+        </div>
+       
+        </div>
+     </div>
+  </main>
+  <span id="actualizar"></span>
+  <footer></footer>
+  <script src="./js/bootstrap.bundle.min.js"></script>  
+  <script src="./js/app-smart-search.js"  type="module"></script>
+  
+  
+</body>
+</html>
+
