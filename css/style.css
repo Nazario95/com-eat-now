@@ -4,16 +4,48 @@
     --colorTexto: #c31952;
 }
 
+/* FUNTES */
+@font-face{
+  font-family: 'precio';
+  src: url('./fonts/Lobster-Regular.ttf');
+}
+
 main{
     background-color: #eaeae9;  
     padding-top: 10PX;  
+    
+}
+.admin-bg{
+  background-color: var(--colorTexto);
+}
+.admin-main-txt-color{
+  color: white!important;
+}
+/* color de texto para fuentes en modo movil */
+.txt-color-phone-mode, .nav-link{
+  color: white!important;
 }
 p, h2, h3, .link{
     color: var(--colorTexto)!important;
     text-align: center;
-    text-decoration: none;
+    text-decoration: none!important;
+}
+.nav-link>h5{
+  color: white!important
+}
+a, h5, .rojo{
+  color: #c31952!important;
+  text-decoration: none!important;
+}
+.centrar{
+    align-items: center;
+    margin: 0 auto;
 }
 
+.centrar-flex{
+  justify-content: center;
+  margin: 0 auto;
+}
 .full-screen{
     height: 100vh;
 }
@@ -35,20 +67,45 @@ p, h2, h3, .link{
     width: 100%;
     margin-bottom: .2rem;
 }
-/******************** MEDIA QUERIS PC ************************/
+/* color de los enlaces */
+.color_fff{
+    color: white!important;
+}
+
+.menu-usuario > li {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #c31952!important;
+
+}
+.menu-usuario > li a{
+  color: #c31952!important;
+
+}
+.menu-usuario > li:hover{
+  background-color: white;
+  color: #c31952!important;
+}
+
+/******************** MEDIA QUERIS TABLETS ************************/
 @media (min-width:768px){
     /* CONFIGURACION-GLOBAL-MODO-PC */    
-    a, h5{
-        color: #c31952!important;
-    } 
+    
+    /* color del nombre de usaurio */
+    .usuario{
+      color: #c31952!important;
+     }
     .menu-modo-pc{
         display:contents!important;
     }
     .menu-modo-movil{
         display: none;
     }
+    
+    .txt-color-phone-mode, .nav-link{
+      color: var(--colorTexto)!important;
+    }
+    /* PC MODE  - seccion slider del main */
 
-    /* seccion slider del main */
     .carousel-item > img{
         width: 100%;
         height: 500px;
@@ -61,25 +118,25 @@ p, h2, h3, .link{
         margin-right: 2rem;
     } 
 
-    /* seccion de buscador   */
+    /*PC MODE  - SECCION DE BUSCADOR   */
     .search-bar{
         max-width: 500px!important;
     }
 
-    /* cadena de restaurantes y comida */
-    .tarjeta img{
-        width: 100%;
-        object-fit: cover;
-    }
+    /* PC MODE - CADENA DE RESTAURANTES Y COMIDA */
+    #foot-c-father{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 1.5rem;
+    }   
 
-    #cadena-de-restaurantes, #foot-c-father{
-        display: flex;
+    /* SECCION DE RESTAURANTES */
+    .cadena-de-restaurantes{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 1rem;
     }
-    .tarjeta{
-        width: 300px;
-        margin: 0 5px!important;
-    }
-
+   
     /* seccion -tabla ubicacioneS*/
     .container-table-adress{
         margin: 50px;
@@ -93,12 +150,15 @@ p, h2, h3, .link{
         width: 75%;
     }
 
-    /**** PAGINA: DESCIPCION-COMIDA-HTML ****/
+    /**** PC MODE  - PAGINA: DESCIPCION-COMIDA-HTML ****/
     .flex-img-comdida{
         flex-direction: row!important;
     } 
-    
-    /**** PAGINA: PROCESAR-PAGO ****/
+
+    .fondo-diferente{
+      background-color: #1bc03f;
+    }
+    /**** PC MODE  - PAGINA: PROCESAR-PAGO ****/
     .container-pedido{
         flex-direction: row!important;
     }
@@ -112,9 +172,72 @@ p, h2, h3, .link{
     .container-table-adress{
         padding-bottom: 20px;
     }
+
+    .registro{
+      max-width: 600px;
+    }
+    
+    /* HISTORIAL-PEDIDOS.HTML */
+    .tabla-historia{
+      max-width: 80%;
+      margin: 0 auto;
+    }
+    /******* PC MODE - PAGINA DE RESULTADOS BUSQUEDA ***/
+    .resultados-de-busqueda{
+      display: grid!important;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2rem;
+    }
+
+  .hover-description{ 
+    /* 
+      aqui definimos el tamaño de cada component
+      esto permite que sean uniformes, sin iportar el tamaño de la img  
+    */
+    width: 350px;
+    height: 350px;
+    margin: 5px;
+  }
+
+  /* MENU-RESTAURANTE.HTML ----------- */
+  video{
+      width: 90%;
+      height: 100%;   
+      object-fit: cover;
+  }
+  .platos-por-categoria{
+   display: grid;   
+   grid-template-columns: repeat(2, 1fr);
+  }
 }
 
+/******************** MEDIA QUERIS PC ************************/
+@media (min-width:900px){
+  #foot-c-father{
+    grid-template-columns: repeat(3, 1fr);
+  }
 
+  .cadena-de-restaurantes{
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .resultados-de-busqueda{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  /* menu-restaurante.html */
+
+  .platos-por-categoria{ 
+    grid-template-columns: repeat(3, 1fr);
+   }
+
+     /* HISTORIAL-PEDIDOS.HTML */
+     .tabla-historia{
+      max-width: 65%;
+    }
+}
 /************************* MOBILE FIRST CONFIG **************/
     /* menu amburguesa */
 
@@ -139,18 +262,23 @@ p, h2, h3, .link{
 
     /* texto-bucar, buscador y btn bucar */
 
-    /* Catalogos de Comida, cadena de restaurantes */       
+    /* Catalogos de Comida, cadena de restaurantes */   
+    
+    
        .tarjeta{
            background-color: white;
-           width: 90%;
+           width: 70%;
+           height: 200px;
            box-shadow: #d1d1d1 0px 1px 20px 1px;
            border-radius: 10px;
-           margin: 20px auto;
+           margin: 3.5rem auto;
        }
 
        .tarjeta img{
         width: 100%;
+        height: 100%;
         object-fit: cover;
+        scale: 0.95;
        }
        
        .describcion-tarjeta{
@@ -168,7 +296,18 @@ p, h2, h3, .link{
             margin-top: 50px;
         }
 
+    /* PLACEHOLDERS - Componenetes de cargar */
+    .width-load-component{
+        width: 200px;
+        height: 250px;
+        margin-left: 1rem;
+    }
 
+    .width-img-load-component{
+        width: 200px;
+        height: 200px;
+    }
+    
     /* seccion -tabla ubicacioneS*/
         .encontrar-restaurante{
             max-width: 90%;
@@ -216,13 +355,30 @@ p, h2, h3, .link{
     text-decoration:underline;
     }
 
-/****** PAGINA DE INFO DE RESTAURANTE INDIVIDUAL *******/
-
+/****** MENU-RESTAURANTE.HTML ---------- *******/
+    .header-video-play{
+      display: flex;
+      justify-content: center;
+      height: 400px;
+    }
     video{
-        max-width: 100%;    
+        width: 90%;
+        height: 100%;   
         object-fit: cover;
     }
 
+    .contenedor-platos-categoria{
+      display: flex;
+      justify-content: center; 
+    }
+    .contenedor-carta-restaurante{
+      display: flex;
+      justify-content: center;     
+    }
+    .componente-carta-restaurante{
+      width: 300px;
+      height: 260px;
+    }
     .main-menu-desplegable{
         background-color: #c31952b4;
     }
@@ -236,7 +392,467 @@ p, h2, h3, .link{
         align-items: center;
     }
 
-/*/******** LOGIN ********/*/
+/*/******** LOGIN ********/
     .iniciar-sesion{
         margin:0 auto;
+    }
+/*/******** LOGIN PAGINA MODAL********/
+.form_container {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 50px 40px 20px 40px;
+    background-color: #ffffff;
+    box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
+      0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
+      0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 11px;
+    font-family: "Inter", sans-serif;
+  }
+    
+  .title_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #212121;
+  }
+  
+  .subtitle {
+    font-size: 0.725rem;
+    max-width: 80%;
+    text-align: center;
+    line-height: 1.1rem;
+    color: #8B8E98
+  }
+  
+  .input_container {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .icon {
+    width: 20px;
+    position: absolute;
+    z-index: 99;
+    left: 12px;
+    bottom: 9px;
+  }
+  
+  .input_label {
+    font-size: 0.75rem;
+    color: #8B8E98;
+    font-weight: 600;
+  }
+  
+  .input_field {
+    width: auto;
+    height: 40px;
+    padding: 0 0 0 40px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid #e5e5e5;
+    filter: drop-shadow(0px 1px 0px #efefef)
+      drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+  }
+  
+  .input_field:focus {
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px 2px #242424;
+    background-color: transparent;
+  }
+  
+  .sign-in_btn {
+    width: 100%;
+    height: 40px;
+    border: 0;
+    background: #115DFC;
+    border-radius: 7px;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .create-count, .create-count>a{
+    width: 100%;
+    height: 40px;
+    border: 0;    
+    background: #c31952;
+    border-radius: 7px;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 9px;
+  }
+  
+  .sign-in_ggl {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #ffffff;
+    border-radius: 7px;
+    outline: none;
+    color: #242424;
+    border: 1px solid #e5e5e5;
+    filter: drop-shadow(0px 1px 0px #efefef)
+      drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+    cursor: pointer;
+  }
+  
+  .sign-in_apl {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #212121;
+    border-radius: 7px;
+    outline: none;
+    color: #ffffff;
+    border: 1px solid #e5e5e5;
+    filter: drop-shadow(0px 1px 0px #efefef)
+      drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+    cursor: pointer;
+  }
+  
+  .separator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    color: #8B8E98;
+  }
+  
+  .separator .line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #e8e8e8;
+  }
+  
+  .note {
+    font-size: 0.75rem;
+    color: #8B8E98;
+    text-decoration: underline;
+  }
+
+
+  /********************************* CODIGO CSS DE LA SECCION CREACION DE USUARIO************** */
+  @media (min-width:768px){
+    .form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+  }
+  .form {
+    display: grid;
+    gap: 10px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .title {
+    font-size: 28px;
+    color: royalblue;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+  }
+  
+  .title::before,.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background-color: royalblue;
+  }
+  
+  .title::before {
+    width: 18px;
+    height: 18px;
+    background-color: royalblue;
+  }
+  
+  .title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+  }
+  
+  .message, .signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+  }
+  
+  .signin {
+    text-align: center;
+  }
+  
+  .signin a {
+    color: royalblue;
+  }
+  
+  .signin a:hover {
+    text-decoration: underline royalblue;
+  }
+  
+  .flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+  
+  .form label {
+    position: relative;
+  }
+  
+  .form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+  }
+  
+  .form label .input + span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+  }
+  
+  .form label .input:placeholder-shown + span {
+    top: 15px;
+    font-size: 0.9em;
+  }
+  
+  .form label .input:focus + span,.form label .input:valid + span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+  }
+  
+  .form label .input:valid + span {
+    color: green;
+  }
+  
+  .submit {
+    border: none;
+    outline: none;
+    background-color: royalblue;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+  }
+  
+  .submit:hover {
+    background-color: rgb(56, 90, 194);
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+/* CSS PARA LA PAGINA DE ADMINISTRACION */
+.seccion{
+  display: none;
+} 
+.mostrar-seccion{
+  display: block!important;
+}
+
+.actual{
+  background-color: blue;
+  color: white;
+}
+
+
+/* CSS PARA LA PAGINA DE RESULTADOS BUSCQUEDAS */
+.res-bg-color{
+  background-color: #eaeae9; 
+}
+
+.resultados-de-busqueda{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hover-description{
+  position: relative;
+  overflow: hidden;
+}
+.hover-description div a{
+ margin-bottom: 30px;
+ transition: all .2s ease-in-out;
+}
+
+  /* EFETOS DE HOVER */
+.hover-description div{
+  opacity: 0;
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  padding: 15px 10px;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  text-align: center;
+  font-family:  'Oswald', sans-serif;
+  text-decoration: none;
+  color: white;
+}
+
+.hover-description img{
+  transition: all .2s ease-in-out;
+}
+.hover-description:hover img{
+  transform: scale(1.1);
+}
+.hover-description:hover div{
+  bottom:0;
+  opacity: 1;
+  transition: all .2s ease-in-out;
+}
+
+.hover-description a span:hover{
+  color: var(--colorAmarillo);
+  background-color: rgba(187, 5, 5, 0.3);;
+  padding: 10px 80px;
+ }
+
+ .precio{
+  color: var(--colorTexto);
+  font-size: xx-large;
+  font-family: 'precio', sans-serif;
+ }
+
+ .comprar{  
+  text-decoration: none!important;
+ }
+
+
+
+ /* PAGINA DESCRIBCION COMIDA.HTML -----------------------------------*/
+#informacion-plato{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: var(--colorTexto);
+  column-gap: 2rem;
+}
+ .img-carrito{  
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+ }
+ .carrito{
+  width: 80px;
+  height: 80px;
+  margin-right: 0.5rem;
+  background-color: #c31952;
+ }
+ .imagen-plato{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+ }
+.imagen-plato img{
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+}
+    /* tabla-factura */
+  .informacion-articulo{
+      display: flex;
+      justify-content: center;     
+  }
+  .informacion-articulo .precio{
+    font-family: 'precio', sans-serif;    
+}
+
+  .td-info{
+      text-align: end;
+  }
+
+  .informacion-articulo tr td h3{
+      margin: 0;
+      text-align: left;
+  }   
+
+
+  /* HISTORIAL-PEDIDOS.HTML -----------------*/
+  /* estados de un pedido */
+    .estado{
+      display: flex;
+      justify-content: center;
+      padding-bottom: 5px;
+      
+    }
+    .estado > p{
+      width: 64%;
+      border-radius: 8px;
+      color: white!important;
+      
+    }
+    .estado-en-proceso{
+      background-color: rgb(23, 23, 209)
+    }
+    .estado-en-completado{
+      background-color: #1bc03f;
+    }
+    .estado-en-retirado{
+      background-color: darkkhaki;
+    }
+    .estado-en-cancelando{
+      background-color: rgb(73, 73, 73);
+    }
+    .estado-en-cancelado{
+      background-color: red;
     }
