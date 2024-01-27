@@ -7,6 +7,9 @@ import {getFirestore, query, collection, getDocs, getDoc, doc} from "https://www
 import {getStorage, ref, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 const storage = getStorage(componentes.app);
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 //importamos la configuracion de mi app firebase
 const db = getFirestore(componentes.app);
 //capturamos los elementos del formulario
@@ -38,7 +41,7 @@ async function restDisponibles(){
 // reseteamos la variable que tendra el inderHtml
 let enlaceResultadoBusqueda = ``;
 
-var omitirBtnBuscarRestaurante = ['/login.html', '/resultados-busqueda.html','/administracion.html', '/historial-pedidos.html']
+var omitirBtnBuscarRestaurante = [`${rutaPricipal}login.html`, `${rutaPricipal}resultados-busqueda.html`,`${rutaPricipal}administracion.html`, `${rutaPricipal}historial-pedidos.html`]
 
 if(!omitirBtnBuscarRestaurante.includes(location.pathname)){ 
             //Accedemos al boton de buscar para determinar comportamiento del clic
@@ -75,7 +78,7 @@ function verResultadosBusqueda(){
 
             //  console.log('existe');
              enlaceResultadoBusqueda += `
-                 <a href="/menu-restaurante.html?restaurante=${restaurantes[i]}">
+                 <a href="./menu-restaurante.html?restaurante=${restaurantes[i]}">
                       ${restaurantes[i]}
                  </a><br>
              `
@@ -140,7 +143,7 @@ function verResultadosBusquedaMovil(){
     }    
 
     // console.log(location.pathname);
-    if(location.pathname==='/resultados-busqueda.html'){
+    if(location.pathname===`${rutaPricipal}resultados-busqueda.html`){
         let buscarComida;
         //accedemos al par clave valor de la url
         let valorUrl = window.location.search;
@@ -273,7 +276,7 @@ function verResultadosBusquedaMovil(){
                             <span>${nombreComida.toUpperCase()}</span><br>
                             <span><span class="link">Ingredientes</span>: ${describicionComida}</span><br>
                              <span class="precio">A tan solo ${precio}FCFA</span><br>
-                            <a href="/describcion-comida-1.html?id=${idPlato}&&res=${restaurante}" class="comprar">
+                            <a href="./describcion-comida-1.html?id=${idPlato}&&res=${restaurante}" class="comprar">
                                 <span class="comprar link">PRUEBALO YA</span>
                             </a> 
                         </div>
@@ -294,7 +297,7 @@ function verResultadosBusquedaMovil(){
 
 //  ------------ SECCION: "describcion-comida.html" MOSTRAR RESULTADOS DE LA COMIDA SELECIONADA
 
-if(location.pathname === '/describcion-comida-1.html'){
+if(location.pathname === `${rutaPricipal}describcion-comida-1.html`){
     //console.log('/describcion-comida-1.htm')
     //almacenaremos los valores de la url
     const datosPlato= []
@@ -609,7 +612,7 @@ function leerUrlData(){
         urlData.push(valor)
     }
 }
-let omitirPaginas = ['/', '/index.html', '/historial-pedidos.html']
+let omitirPaginas = [rutaPricipal, `${rutaPricipal}index.html`, `${rutaPricipal}historial-pedidos.html`]
 
 if(!omitirPaginas.includes(location.pathname)){
     // console.log(location.pathname) 

@@ -1,3 +1,6 @@
+//PAGINA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 
 let head = '';
 let header = '';
@@ -24,7 +27,7 @@ let buscadorComida = `
 //guardamos informacion de la ubicacion actual
 const paginaActual = location.pathname;
 
-if(paginaActual === '/administracion.html'){
+if(paginaActual === `${rutaPricipal}administracion.html`){
    menu = {
     opcion1 : 'Home',
     opcion2 : 'Informacion de perfil', 
@@ -34,7 +37,7 @@ if(paginaActual === '/administracion.html'){
    }
 
    enlaces = {    
-    link0:'/administracion.html?selec=',
+    link0:'./administracion.html?selec=',
     link1:'home',
     link2:'perfil',
     link3:'historial',
@@ -81,7 +84,7 @@ if(paginaActual === '/administracion.html'){
     `;
 }
 
-if(paginaActual != '/administracion.html'){
+if(paginaActual != `${rutaPricipal}administracion.html`){
   menu = {
     opcion1 : 'Busca tu restaurante favorito',
     opcion2 : 'Iniciar sesion', 
@@ -89,7 +92,7 @@ if(paginaActual != '/administracion.html'){
    }
 
    enlaces = {    
-    link0:'/',
+    link0:'./',
     link1:'resultados-busqueda.html',
     link2:'login.html',
     link3:'#'
@@ -134,13 +137,13 @@ var modalBuscarRestaurante = `
   `
 
 //OCULTAMOS LOS BUSCADORES 'BucarComida y Buscar restaurante' del header solo en la pagina indicada
-let omitirPaginas = ['/create-user.html', '/registrar.html' , '/cuenta.html', '/historial-pedidos.html']
+let omitirPaginas = [`${rutaPricipal}create-user.html`, `${rutaPricipal}registrar.html` , `${rutaPricipal}cuenta.html`, `${rutaPricipal}historial-pedidos.html`]
 if(omitirPaginas.includes(paginaActual)){
   buscadorComida = '';
   botonBuscarRestaurante = '';
   modalBuscarRestaurante = ''
 
-  if(paginaActual === '/cuenta.html'){
+  if(paginaActual === `${rutaPricipal}cuenta.html`){
     buscadorComida = `
       <h2>Datos de cuenta de usuario</h2>
     `;  

@@ -9,6 +9,9 @@ const db = getFirestore(componentes.app);
 import {getStorage, ref, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 const storage = getStorage(componentes.app);
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 // VARIABLES, OBJETOS Y ARRAYS
 // arrray que almacena valores de la URL
 let datosCompra = []
@@ -86,7 +89,7 @@ function facturarCarrito(){
 }
 
 function facturaIndividual(){
-    if(location.pathname == '/procesar-pago.html'){
+    if(location.pathname == `${rutaPricipal}procesar-pago.html`){
         document.querySelector('.solo-carrito').classList.add('d-none')
 
     } 
@@ -100,7 +103,7 @@ function porcesarPago(datosCompra){
      datosCompra[2] = nombre de usuario
      */
     // console.log(datosCompra)
-    location.href=`procesar-pago.html?rest=${datosCompra[1]}&&plato=${datosCompra[0]}&&client=${datosCompra[2]}`
+    location.href=`${rutaPricipal}procesar-pago.html?rest=${datosCompra[1]}&&plato=${datosCompra[0]}&&client=${datosCompra[2]}`
 }
 
 //FUNCION PARA CREAR CARRITO DE COMPRA DEL USUARIO
@@ -136,7 +139,7 @@ function porcesarPago(datosCompra){
 
 
 
-if(location.pathname =='/procesar-pago.html'){
+if(location.pathname ==`${rutaPricipal}procesar-pago.html`){
     /*
        datosCompra[0] -> nom restaurante
        datosCompra[1] -> id del plato
@@ -186,7 +189,7 @@ if(location.pathname =='/procesar-pago.html'){
 
 
 //verficar el estado del check box
-if(location.pathname == '/procesar-pago.html'){
+if(location.pathname == `${rutaPricipal}procesar-pago.html`){
     activarDesactivarCheckBox()
 }
 function activarDesactivarCheckBox(){
@@ -400,7 +403,7 @@ function procesandoPago(usuarioFactura, registros){
             await setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
             mostrarAlerta('success', 'Gracias por comprar con nosotros');
             setTimeout(() => {
-                location.href = '/';
+                location.href = './';
             }, 5000);
         }
         else{
@@ -408,7 +411,7 @@ function procesandoPago(usuarioFactura, registros){
             await setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
             mostrarAlerta('success', 'Pago del carrito completado');
             setTimeout(() => {
-                location.href = '/';
+                location.href = './';
             }, 5000);
         }       
     }

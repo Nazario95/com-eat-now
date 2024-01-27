@@ -4,6 +4,9 @@ import componentes from "../templetes/exportfile.js";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const auth  = getAuth(componentes.app);
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal')
+// console.log(rutaPricipal)
 
 // CONEXION A FIRESTORE ---------------
 import {getFirestore, doc, setDoc, updateDoc, collection, getDocs, getDoc}  from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
@@ -19,7 +22,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    const submitBtn = document.querySelector('.sign-in_btn');   
 
    //Esto solo se ejecuta cuando registramos un usuario
-   if(location.pathname === '/create-user.html'){
+   if(location.pathname === `${rutaPricipal}create-user.html`){
         //capurando datos del formulario para crear usuario  
         //El formulario  
          const DatosUsuario = document.querySelector('#crear-usuario');
@@ -45,7 +48,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    submitBtn.addEventListener('click', (e)=>{
        e.preventDefault();      
        //almacenado valores del formulario en variables
-       if(location.pathname ==='/login.html'){
+       if(location.pathname ===`${rutaPricipal}login.html`){
         var email = loginData[0].value;
         var password = loginData[1].value;
        }else{
@@ -109,7 +112,7 @@ onAuthStateChanged(auth, (user) => {
         usuario=user; //usuario - Toda la informacion del usuario
         //Guarndar datos de sesion en el objeto
         usuarioActivo.push(user.email)
-        if(location.pathname==='/create-user.html' || location.pathname==='/login.html'){
+        if(location.pathname===`${rutaPricipal}create-user.html` || location.pathname===`${rutaPricipal}login.html`){
             location.pathname ='./';
         }
         let mensajeBienvenida = `Bienvenido ${user.email}`;
@@ -146,8 +149,10 @@ onAuthStateChanged(auth, (user) => {
         })        
         ; cerraSesion();          
     }
+
     // PAGINA: ./CUENTA.HTML
-    if(location.pathname === '/cuenta.html'){
+    if(location.pathname === `${rutaPricipal}cuenta.html`){
+        console.log('cargando')
         const userData = async ()=>{
             const snapshotUserData= await getDoc(doc(db, 'public-db/YYKv1vbDdUWhvcEezFyx/users/', usuarioActivo[0]))
             if(snapshotUserData){
@@ -326,7 +331,7 @@ function datosCuenta(userData){
     //iteramos sobre el objeto "userData"
     for (const clave in userData) {
     
-        for(let i=0;i<7;i++){//teramos sobre los campos del formulario
+        for(let i=0;i<7;i++){//iteramos sobre los campos del formulario
             const guardarEnForm =  perfilUsuario[i].getAttribute("id")
             //inyectamos valores en los campos que coniciden
             if(clave == guardarEnForm){
@@ -338,7 +343,7 @@ function datosCuenta(userData){
 }
 
 //FUNCION BTN ACTUALIZAR EN LA PAGINA "CUENTA.HTML"
-if(location.pathname== '/cuenta.html'){
+if(location.pathname== `${rutaPricipal}cuenta.html`){
     const btnActualizar = document.getElementById('actualizar')
     btnActualizar.addEventListener('click',(e)=>{
         //la sentencia "if" es un parche, debido a que el archivo session  tiene conflicto de id con el archivo registrar.html

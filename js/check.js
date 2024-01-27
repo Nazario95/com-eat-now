@@ -9,6 +9,9 @@ import {usuarioActivo} from './session.js'
 const valorUrl = window.location.search;
 const parrametrosUrl = new URLSearchParams(valorUrl);  
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 //accemos a las clave:valor de los parramtros
 for (const [llave, valor] of parrametrosUrl) {
     

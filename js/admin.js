@@ -15,6 +15,9 @@ import { mostrarAlerta } from "./mensajes-alerta.js";
 // /IMPORTAR USUARIO ACTIVO
 import { usuarioActivo } from "./session.js";
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 //VARIABLES PREDETERMINADAS
 //almacena seccion actual de la pagina
 let tabActual = '';
@@ -183,7 +186,7 @@ function verificarValorUrl(){
             mostrarAlerta('success', msg1);
             //recargamos la pagina, para evitar que se reescriban datos en la db
             setTimeout(() => {
-                location.href = '/administracion.html?selec=carta';
+                location.href = './administracion.html?selec=carta';
             }, 2000);
         }
    
@@ -277,7 +280,7 @@ function verificarValorUrl(){
             })
             .then(()=>{
                 setTimeout(() => {
-                    location.href = '/administracion.html?selec=subir-plato';
+                    location.href = './administracion.html?selec=subir-plato';
                 }, 2000);
             })
             .catch(error=>console.log(error));

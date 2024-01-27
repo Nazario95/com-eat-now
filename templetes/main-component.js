@@ -10,6 +10,9 @@ const db = getFirestore(componentes.app);
 import {getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 const storage = getStorage(componentes.app);
 
+
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
 //------------- variables predeterminadas ----------
 
 let datosNuevosPlatos = [];
@@ -116,11 +119,11 @@ nuevosPlatos.innerHTML = `
 let enlaceResultadoBusqueda = ` <p>Resultados encontrados</p><br>`;
 
 
-if(location.pathname!='/login.html'){
+if(location.pathname!=`${rutaPricipal}login.html`){
     
-    if(location.pathname!='/resultados-busqueda.html'){
+    if(location.pathname!=`${rutaPricipal}resultados-busqueda.html`){
 
-        if(location.pathname!='/administracion.html'){
+        if(location.pathname!=`${rutaPricipal}administracion.html`){
 
             //Accedemos al boton de buscar para determinar comportamiento del clic
             const btnBuscarRestaurante = document.querySelector('.btn-buscar-restaurante');
@@ -157,7 +160,7 @@ function verResultadosBusqueda(){
 
             //  console.log('existe');
              enlaceResultadoBusqueda += `
-                 <a href="/menu-restaurante.html?restaurante=${restaurantes[i]}">
+                 <a href="./menu-restaurante.html?restaurante=${restaurantes[i]}">
                       ${restaurantes[i]}
                  </a><br>
              `
@@ -187,7 +190,7 @@ function verResultadosBusquedaMovil(){
             existeRestaurante=true;
 
             enlaceResultadoBusqueda += `
-                <a style="color:brown;" href="/menu-restaurante.html?restaurante=${restaurantes[i]}">
+                <a style="color:brown;" href="./menu-restaurante.html?restaurante=${restaurantes[i]}">
                      ${restaurantes[i]}
                 </a><br>
             `

@@ -5,6 +5,8 @@
     //         location.href='/';
     //     }
     // } 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
 
 function isMobile() {
     return window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('Windows Phone') !== -1);
@@ -12,19 +14,19 @@ function isMobile() {
 //si el entorno es un movil
 if(isMobile()){
     var  entornoEjecucion = `
-        <a href="/" class="link">Volvrer a inicio</a>
+        <a href="./" class="link">Volvrer a inicio</a>
     `
 }
 //si el entorno es pc
 else{
-    if (location.pathname!='/login.html' ) {
+    if (location.pathname!=`${rutaPricipal}login.html`) {
         var entornoEjecucion = `    
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
     `
     } 
     else{
         var  entornoEjecucion = `
-        <a href="/" class="link">Volvrer a inicio</a>
+        <a href="./" class="link">Volvrer a inicio</a>
         `
     }   
 }
