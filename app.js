@@ -7,8 +7,13 @@ const db = getFirestore(componentes.app)
 import {getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 const storage = getStorage(componentes.app);
 
+//RUTA PRINCIPAL
+const rutaPricipal = localStorage.getItem('rutaPrincipal');
+
 //INDEX.HTML - INYECTAR DATOS CATEGORIA ----------------------------------
-if(location.pathname ==='/index.html' || location.pathname ==='/'){
+var omitirAccesoIndex = [rutaPricipal,`${rutaPricipal}index.html`]
+
+if(omitirAccesoIndex.includes(location.pathname)){
     let componenteCategoriaMovil = ``;
     let componenteCategorilPc = ``;
     //ACCEDEMOS AL CONTENEDOR
@@ -62,7 +67,7 @@ var restaurantesUsuario = []
 var componenteTablaHistorial='';
 var btnCancelarPedido;
 
-if(location.pathname == '/historial-pedidos.html'){
+if(location.pathname == `${rutaPricipal}historial-pedidos.html`){
     // console.log('yes') 
     capturarRestaraurantes()
     setTimeout(() => {
@@ -340,7 +345,7 @@ restaurantes.forEach(restaurante =>{
                  `
             })
             //el if es un parche, para evitar conflicto con otras paginas
-            if(location.pathname=='/index.html' || location.pathname=='/'){
+            if(omitirAccesoIndex.includes(location.pathname)){
                 contendorImgRestaurante.innerHTML=componentePlaceHolder;
             }
             

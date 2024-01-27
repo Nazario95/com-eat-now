@@ -276,7 +276,11 @@
       <script src="./js/fire_db_actions.js" type="module"></script>
       <script src="./js/app-smart-search.js" type="module"></script>  
         
-  
+  <script>
+    if(localStorage.getItem('rutaPrincipal', location.pathname) == null){
+      localStorage.setItem('rutaPrincipal',location.pathname)
+    }
+  </script>
   </div>  <!-- .fin contenedor-principal -->
 </body>
 </html>
