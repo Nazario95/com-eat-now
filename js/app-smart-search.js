@@ -603,7 +603,8 @@ function leerUrlData(){
      const parrametrosUrl = new URLSearchParams(valorUrl);
 
      if(parrametrosUrl.size === 0){
-        location.href='./';
+        // location.href='./';
+        console.log('debe ir a inicio')
     }
 
     for (const [llave, valor] of parrametrosUrl) {
