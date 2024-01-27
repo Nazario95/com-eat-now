@@ -268,10 +268,11 @@ function templetePrincipal(){
     const footer = document.querySelector('footer');
 
     head.innerHTML = componentes.head;
-
-    if(location.pathname !='/index.html' && location.pathname !='/'){
+    
+    // LOGIN.HTML --------------------------------------------
+    if(location.pathname !=`${rutaPricipal}index.html` && location.pathname !=rutaPricipal){
         //ocultar componentes del header para pagina "/login.html"
-        if(location.pathname =='/login.html'){
+        if(location.pathname ==`${rutaPricipal}login.html`){
             header.innerHTML = ''; 
             footer.innerHTML = '';
             return;
@@ -312,12 +313,12 @@ templetePrincipal();
 
 // ADMINISTRACION.HTML-------------------------------------
 //impedir que se carguen los modales en el menu de la pagina de adminstracion
-if(location.pathname!= '/administracion.html'){
+if(location.pathname!= `${rutaPricipal}administracion.html`){
     inyectarModalLogin();
 }
 function inyectarModalLogin(){
     const containerModalLogin = document.getElementById('modal-login');
-    if(location.pathname =='/login.html'){//inyectar formulario sin modal, solo si se usa movil
+    if(location.pathname ==`${rutaPricipal}login.html`){//inyectar formulario sin modal, solo si se usa movil
         containerModalLogin.innerHTML = componentes.formLogin;        
         return;
     }
