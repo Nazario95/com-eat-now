@@ -22,7 +22,7 @@ let pathImg;; //alamacena las rutas fisicas de las imagenes de los platos
 // MODELO SLIDER GENERAL
 let contenedorSliders =`
     <div class="carousel-item active">
-        <img src="./src/img/0.png" class="d-block w-100 img-fluid">
+        <img src="./src/img/.png" class="d-block w-100 img-fluid">
         <div class="carousel-caption d-none d-md-block">
             <h5>PIDE TU CENA AQUI</h5>
             <p>El mejor servicio de pedido de comida a domicilio online</p>
