@@ -281,12 +281,15 @@ function crearFacturaCarrito(formPedido){
         //  console.log(formPedido[5].value);//ubicacion - bario
 
         for(var i=0;i<datosCarritoCache.length;i++){ 
-            console.log(datosCarritoCache[i])
-            console.log(datosCompra)
+            // console.log(datosCarritoCache[i])
+            // console.log(datosCompra)
+            var userName = datosCompra[datosCompra.length - 1]
+            // console.log( userName)
+            
 
             let usuarioFactura = {
                 idRegistro:totalregistro,            
-                userName:datosCompra[2],
+                userName:userName,
                 nombre:formPedido[0].value,
                 numero:formPedido[1].value,
                 ubicacion:{
@@ -302,15 +305,20 @@ function crearFacturaCarrito(formPedido){
                 completado:false
             }
             
+             //formatea la fecha actual
+            var fecha = new Date();
+            var opciones = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit' };        
+            var fechaFormateada = fecha.toLocaleDateString('es-ES', opciones).replace(/\//g, '-').replace(',', '');
+
             let registros = {
                 id:totalregistro,
-                fecha:new Date().toISOString(),
+                fecha:fechaFormateada,
                 restaurante:datosCarritoCache[i].metaRestaurante,
-                userName:datosCompra[2],
+                userName:userName,
             }
     
-            // console.log(usuarioFactura)
-            // console.log(registros)
+            console.log(usuarioFactura)
+            console.log(registros)
 
             // console.log('-------------------------------------------------------------')      
             totalregistro++
@@ -324,16 +332,16 @@ function crearFacturaCarrito(formPedido){
 }
 
 
-
-
 function crearFacturaIndividual(formPedido){
-    const registroActual = async ()=>{
+    const registroActual = async ()=>{                      
 
         var totalregistro = 0;
 
-        const querySnapshot = await getDocs(collection(db, "public-db/YYKv1vbDdUWhvcEezFyx/registros"));       
-        querySnapshot.forEach(() => {
-            totalregistro++;                          
+        const querySnapshot = await getDocs(collection(db, "public-db/YYKv1vbDdUWhvcEezFyx/registros/"));       
+        querySnapshot.forEach((facturas) => {
+            totalregistro++;  
+            // console.log(facturas.data())                        
+            // console.log('Yes')                        
         });  
         
         //  console.log(totalregistro);//total registros guardados en el servidor
@@ -375,10 +383,15 @@ function crearFacturaIndividual(formPedido){
             token:'',
             completado:false
         }
-        
+
+        //formatea la fecha actual
+        var fecha = new Date();
+        var opciones = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit' };        
+        var fechaFormateada = fecha.toLocaleDateString('es-ES', opciones).replace(/\//g, '-').replace(',', '');
+
         let registros = {
             id:totalregistro,
-            fecha:new Date().toISOString(),
+            fecha:fechaFormateada,
             restaurante:datosCompra[0],
             userName:datosCompra[2],
         }
@@ -391,31 +404,59 @@ function crearFacturaIndividual(formPedido){
 
 function procesandoPago(usuarioFactura, registros){
     console.log(usuarioFactura)
-    // console.log(registros)  
+    console.log(registros)  
 
     const guardandoDatosCompra = async ()=>{
-        //Guardando los datos tomando como refencia los numeros de registro
-        await setDoc(doc(db, `lista-restaurantes/${usuarioFactura.restaurante}/sub-${usuarioFactura.restaurante}/clientes/${datosCompra[2]}`, `${ usuarioFactura.idRegistro}`), usuarioFactura);
+        //verificamos si el usuario a hecho una compra antes
+        let VerificarClientes = await getDoc(doc(db,`lista-restaurantes/${registros.restaurante}/sub-${registros.restaurante}/clientes/sub-clientes/`, usuarioFactura.userName))            
+        
+        let estadoDeExsitencia = `${VerificarClientes.data()}`
+        // console.log(estadoDeExsitencia) // verificar si existe
+
+        if(estadoDeExsitencia === 'undefined'){
+            setDoc(doc(db, `lista-restaurantes/${registros.restaurante}/sub-${registros.restaurante}/clientes/sub-clientes/`, `${usuarioFactura.userName}`), {});
+            console.log('creado')
+            guardandoDatos(usuarioFactura, registros)
+        }
+        else{
+            console.log('Ya Existe referencia de este cliente')
+            guardandoDatos(usuarioFactura, registros)          
+        }
 
         
 
-        if(!datosCompra.includes('facturar')){
-            await setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
-            mostrarAlerta('success', 'Gracias por comprar con nosotros');
-            setTimeout(() => {
-                location.href = './';
-            }, 5000);
-        }
-        else{
-
-            await setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
-            mostrarAlerta('success', 'Pago del carrito completado');
-            setTimeout(() => {
-                location.href = './';
-            }, 5000);
-        }       
+              
     }
     guardandoDatosCompra()
+    
+    function guardandoDatos(usuarioFactura, registros){
+        // Guardando los datos tomando como refencia los numeros de registro
+        setDoc(doc(db, `lista-restaurantes/${registros.restaurante}/sub-${registros.restaurante}/clientes/sub-clientes/${usuarioFactura.userName}/sub-${usuarioFactura.userName}`, `${usuarioFactura.idRegistro}`), usuarioFactura);  
+
+        if(!datosCompra.includes('facturar')){
+            compraIndividual(registros)
+        }
+
+        else{      
+            compraCarrito(registros)
+        }
+    }
+
+    function compraIndividual() {
+        setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
+        mostrarAlerta('success', 'Gracias por comprar con nosotros');
+        setTimeout(() => {
+            location.href = './';
+        }, 5000);
+    }
+
+    function compraCarrito() {
+        setDoc(doc(db, `public-db/YYKv1vbDdUWhvcEezFyx/registros/`, `${registros.id}`), registros);
+        mostrarAlerta('success', 'Pago del carrito completado');
+        setTimeout(() => {
+            location.href = './';
+        }, 5000);
+    }
    
 }
 export {porcesarPago}

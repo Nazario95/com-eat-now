@@ -140,7 +140,7 @@ obtenerDatosDelServer
                                 <span>${cartas[i].nombre_del_plato.toUpperCase()}</span><br>
                                 <span><span class="link">Ingredientes</span>: ${cartas[i].que_lleva}</span><br>
                                 <span class="precio">A tan solo ${cartas[i].precio}FCFA</span><br>
-                                <a href="/describcion-comida-1.html?id=${idDelPlato[i]}&&res=${nombreRestaurante[0]}" class="comprar" target="_blank">
+                                <a href="./describcion-comida-1.html?id=${idDelPlato[i]}&&res=${nombreRestaurante[0]}" class="comprar" target="_blank">
                                     <span class="comprar link">PRUEBALO YA</span>
                                 </a> 
                             </div>                                        

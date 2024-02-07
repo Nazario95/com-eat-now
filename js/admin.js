@@ -1,7 +1,7 @@
 // ----- SECCION IMPORTACIONES -------
 //FIREBASE - importar archivo de exportacion principal
 import componentes from "../templetes/exportfile.js";
-import {getFirestore,doc, getDoc, updateDoc, addDoc, collection, getDocs, query, where} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import {getFirestore,doc, getDoc, updateDoc, addDoc, collection, getDocs, query, where, increment} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 //conectando a app de firebase, para firestore y 
 const connFirestore = getFirestore(componentes.app);
 
@@ -14,6 +14,8 @@ import { mostrarAlerta } from "./mensajes-alerta.js";
 
 // /IMPORTAR USUARIO ACTIVO
 import { usuarioActivo } from "./session.js";
+//USUARIO ACTIVO EN CACHE
+const usuarioActivoCache = localStorage.getItem('sesion');
 
 //RUTA PRINCIPAL
 const rutaPricipal = localStorage.getItem('rutaPrincipal');
@@ -21,7 +23,7 @@ const rutaPricipal = localStorage.getItem('rutaPrincipal');
 //VARIABLES PREDETERMINADAS
 //almacena seccion actual de la pagina
 let tabActual = '';
-//html a inyectar en menu de cartas
+//html a inyectar en menu de cartassubir-plato
 let listaCarta = `<option >Lista de Cartas Disponibles</option>`;
 //almacenamos aqui los datoscapturados de la lista de cartas en firestore
 let elmentosCartaArray = [];
@@ -81,17 +83,38 @@ function verificarValorUrl(){
 
 //APLICACIONES DE LA PAGINA ADMINSTRACION-----------------------------
     //Datos del formulario crear carta
-    const datosFormCarta = document.querySelector('.form-carta');
+    let datosFormCarta;
     //Datos del formulario subir plato
-    const datosFormPlato = document.querySelector('.form-plato');
-    //Captura del boton Submit
-    const btnCarta = document.querySelector('.btn-carta');
-    btnCarta.addEventListener('click',(e)=>{
+    let datosFormPlato;
+
+    let btnCarta
+
+    if(tabActual == 'carta'){
+        datosFormCarta = document.querySelector('.form-carta');
+        datosFormPlato = document.querySelector('.form-plato');
+        btnCarta = document.querySelector('.btn-carta');         
+    
+        btnCarta.addEventListener('click',(e)=>{
         e.preventDefault();
-        if(tabActual=='carta'){carta()}
-        else if(tabActual=='subir-plato'){subirPlato()}
-        else if(tabActual=='perfil'){perfil()}        
-    });
+
+            if(tabActual=='carta'){carta()}
+
+            else if(tabActual=='subir-plato'){subirPlato()}
+            else if(tabActual=='perfil'){perfil()}        
+        });
+    }
+
+    if(tabActual == 'subir-plato'){
+        datosFormCarta = document.querySelector('.form-carta');
+        datosFormPlato = document.querySelector('.form-plato');
+        btnCarta = document.querySelector('.btn-carta');         
+    
+        btnCarta.addEventListener('click',(e)=>{
+            e.preventDefault();
+            if(tabActual=='subir-plato'){subirPlato()}     
+        });
+    }
+
 
 
 // ------ SECCION INFORMACION PERFIL ------ 
@@ -106,8 +129,9 @@ function verificarValorUrl(){
         })
 
         if(tabActual=='perfil'){
+            console.log(usuarioActivo)
             const querySnapshot =  await getDoc(doc(connFirestore, "lista-restaurantes", usuarioActivo[1]));
-            // console.log(querySnapshot.data());
+            console.log(querySnapshot.data());
 
             const datosRegistroformulario = document.getElementById('registro');
             //Ver datos guardados
@@ -284,47 +308,14 @@ function verificarValorUrl(){
                 }, 2000);
             })
             .catch(error=>console.log(error));
-    }
-    
-  
-//APLICACION PARA EXTRACCION DE DATOS EN EL MODAL DE LA SECCION INFORMACION PERFIL > ESTADISTICAS
-const datosEstadisticos = new Promise((resolve, reject) => {
-    const docsCartarestaurantes = getDocs(collection(connFirestore, `/lista-restaurantes/${usuarioActivo[1]}/sub-${usuarioActivo[1]}/cartas/sub-cartas/`));
+    }  
 
-    if(docsCartarestaurantes){
-        resolve(docsCartarestaurantes)
-    }
-})
-
-datosEstadisticos
-    .then(res =>{
-        res.forEach((doc) => { 
-            let {id,nombrePlato,valoracion,numeroDeCompras} = {
-                id:doc.id,
-                nombrePlato:doc.data().nombre_del_plato,
-                valoracion:doc.data().valoracion,
-                numeroDeCompras:doc.data().total_pedidos
-           }
-           tablaDatos+= `
-           <tr>
-               <th scope="row">${id}</th>
-               <td>${nombrePlato}</td>
-               <td>${valoracion}</td>
-               <td>${numeroDeCompras}</td>
-           </tr> 
-           `;
-
-           let elementoDatosEstadisticos = document.getElementById('tabla-datos-estadisticos');
-            elementoDatosEstadisticos.innerHTML = tablaDatos;
-           
-    })
- 
-});
 
 var homeData = [];
 if(tabActual=='home'){
     const querySnapshot =  await getDoc(doc(connFirestore, "lista-restaurantes", usuarioActivo[1]));
-    
+    localStorage.setItem('datosRestauranteCache',JSON.stringify(querySnapshot.data()))
+    // console.log(querySnapshot.data());
     //Agregar Datos estadisticos al array
     homeData.push(querySnapshot.data().nombre) 
     homeData.push(querySnapshot.data().numero_compras) 
@@ -336,7 +327,38 @@ if(tabActual=='home'){
     document.querySelector('.num-compras').textContent=homeData[1]
     document.querySelector('.usuario-actvo').textContent=homeData[2] 
     
+    //APLICACION PARA EXTRACCION DE DATOS EN EL MODAL DE LA SECCION INFORMACION HOME > ESTADISTICAS
+    const datosEstadisticos = new Promise((resolve, reject) => {
+        const docsCartarestaurantes = getDocs(collection(connFirestore, `/lista-restaurantes/${usuarioActivo[1]}/sub-${usuarioActivo[1]}/cartas/sub-cartas/`));
+
+        if(docsCartarestaurantes){
+            resolve(docsCartarestaurantes)
+        }
+    })
+
+    datosEstadisticos
+        .then(res =>{
+            res.forEach((doc) => { 
+                let {id,nombrePlato,valoracion,numeroDeCompras} = {
+                    id:doc.id,
+                    nombrePlato:doc.data().nombre_del_plato,
+                    valoracion:doc.data().valoracion,
+                    numeroDeCompras:doc.data().total_pedidos,
+            }
+            tablaDatos+= `
+            <tr id="${id}">
+                <td>${nombrePlato}</td>
+                <td>${valoracion}</td>
+                <td>${numeroDeCompras}</td>
+            </tr> 
+            `;
+
+            let elementoDatosEstadisticos = document.getElementById('tabla-datos-estadisticos');
+                elementoDatosEstadisticos.innerHTML = tablaDatos;
+            
+        })
     
+    });
 }
 
 // FUNCION QUE INYECTA LOS DATOS EN LAS PAGINAS
@@ -386,10 +408,10 @@ function inyectarHtmlTab(tabActual){
 
                             <thead>
                                 <tr>
-                                    <th scope="col">id</th>
                                     <th scope="col">Plato</th>
                                     <th scope="col">Valoracion</th>
                                     <th scope="col">Numero de compras</th>
+                                    <th scope="col">Fecha de Creacion</th>
                                 </tr>
                             </thead>
 
@@ -459,6 +481,190 @@ function inyectarHtmlTab(tabActual){
     }
     // ----------------------------------------------------------------------------------------------------------------
     else if(tabActual === 'historial'){
+        //DATOS => Seccion historial
+
+        let clientesRestaurante=[]
+        let getPlatosCliente = []
+        let getEstadoPedido = []
+        let platosCarta = []
+
+        let htmlTablaClientes='';
+
+        //verificar informacion de restante en cache
+        verificarDatosRestaurante()
+
+        //extraer informacion restaurante en cache
+        var {correo, nombre} = JSON.parse(localStorage.getItem('datosRestauranteCache'))
+    //    console.log(correo, nombre.toLowerCase());
+
+       //Promesa de capturar clientes
+       const getNombresClientes= new Promise((resolve, reject) => {
+            let clientes =  getDocs(collection(connFirestore,`lista-restaurantes/${nombre.toLowerCase()}/sub-${nombre.toLowerCase()}/clientes/sub-clientes`)) 
+
+            if(clientes){
+                resolve(clientes)
+            }
+       })
+       //procesar resultados de clientes capturados
+       getNombresClientes
+        .then(clientes =>{             
+            clientes.forEach(cliente =>{
+                //guardando nombres en el array "clientesRestaurante"
+                clientesRestaurante.push(cliente.id)
+            })        
+        })
+        
+        .then(() =>{
+            clientesRestaurante.forEach(cliente => {
+                //Promesa que captura todos los platos del restaurante
+                const getPlatosRestaurante = new Promise((resolve, reject) => {
+
+                    let platosCliente = getDocs(collection(connFirestore,`lista-restaurantes/${nombre.toLowerCase()}/sub-${nombre.toLowerCase()}/clientes/sub-clientes/${cliente}/sub-${cliente}`));
+
+                    if(platosCliente){
+                        resolve(platosCliente)
+                    }
+                })
+
+                getPlatosRestaurante
+                //capturando los platos
+                    .then(platosCliente =>{
+                        platosCliente.forEach(platos => {
+                            getPlatosCliente.push(platos.data())                           
+                            htmlHistorialCompras(platos.data())
+                        })
+                        
+                    })
+              
+            })
+           
+            function htmlHistorialCompras(datos){
+                // console.log(datos)
+
+                let datosPlatoRegistro = async()=>{                      
+                    let obtenerIdRegistro = await getDoc(doc(connFirestore,`public-db/YYKv1vbDdUWhvcEezFyx/registros/${datos.idRegistro}`))
+                    // console.log(obtenerIdRegistro.data())
+                    getEstadoPedido.push(obtenerIdRegistro.data())
+
+                    let getDatosDelPlato = await getDoc(doc(connFirestore,`lista-restaurantes/${datos.restaurante}/sub-${datos.restaurante}/cartas/sub-cartas/${datos.idPlato}`))
+                    //creamos una constante para almacenar los platos
+                    const platosRestaurante =getDatosDelPlato.data()
+                    //agregamos el id del plato al nuevo objeto creado
+                    platosRestaurante.idPlatoRegistro=getDatosDelPlato.id
+                    //agregamos los datos al array global platosCarta
+                    platosCarta.push(platosRestaurante)
+
+                    // inyectarhtmlDatosTabla(datos,getRegistros,getInfoDatosDelPlato)
+                }
+                datosPlatoRegistro()
+            
+            }
+
+            //llamando a la funcion para crear elementos de la tabla
+            setTimeout(() => {
+                inyectarhtmlDatosTabla()
+            }, 3000);
+
+            function inyectarhtmlDatosTabla(){
+                // console.log(clientesRestaurante)
+                // console.log(getPlatosCliente)
+                // console.log(getEstadoPedido)
+                // console.log(platosCarta)
+
+                clientesRestaurante.forEach(cliente =>{
+                    getPlatosCliente.forEach(plato=>{                        
+                        if(cliente === plato.userName){
+                            // console.log(cliente)
+                            // console.log(plato)
+
+                            for(var i=0;i<platosCarta.length;i++){
+                                if(platosCarta[i].idPlatoRegistro == plato.idPlato){
+                                    var nombrePlato = platosCarta[i].nombre_del_plato
+                                }
+                            }
+
+                            for(var i=0;i<getEstadoPedido.length;i++){
+                                if(getEstadoPedido[i].id == plato.idRegistro){
+                                    var fechaCompra = getEstadoPedido[i].fecha
+                                }
+                            }
+                            // console.log(nombrePlato)
+                            // console.log(fechaCompra)
+
+                            htmlTablaClientes += `
+                                    <tr>
+                                        <td><!-- INICIO DE HTML MODAL -->
+
+                                            <!--------- ELEMENTO BOTON QUE ACTIVA EL MODAL -------->
+                                            <!-------- data-bs-target="#infoCompra" AQUI INDICAS AL MODAL QUE APUNTAS O OBRAS ------>
+                                            <a type="button" data-bs-toggle="modal" data-bs-target="#${plato.idRegistro}-${plato.idPlato}">
+                                                ${plato.userName}
+                                            </a> 
+                                        </td>
+                                        <td>${nombrePlato}</td>
+                                        <td>${fechaCompra}</td>
+                                        <td>
+                                            <p class="m-0 text-light estado-pedido" id="${plato.idRegistro}">
+                                                <img src="./src/img/load.svg">
+                                            </p> 
+                                        </td>
+                                    </tr>
+
+
+                                <div>
+                                <!-- -------EL MODAL A INVOCAR------- -->
+                                <!------ infoCompra, DEBE COINCIDIR CON EL MODAL QUE APUNTAS ARIBA ------->
+                                <div class="modal fade" id="${plato.idRegistro}-${plato.idPlato}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <!-- INDICAMOS LA POSOCION DEL MODAL -->
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <!-------- TITULO DEL MODAL -------->
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Informacion de Compra</h1>
+                                                <!-------- RESERVADO PARA EL X DE CERRA ------>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <!---------- TODOS LOS DATOS QUE QUIERES PONER EL MODAL, AQUI VAN ------------>
+                                            <div class="modal-body">
+                                                <p>ID de Compra: 0000<span>${plato.idRegistro}</span></p>
+                                                <p>Plato: <span>${nombrePlato}</span></p>
+                                                <p>Pagado: <span>${plato.totalPagado}FCFA</span></p>
+                                                <p>Tipo de Pago: <span>${plato.metodoPago}</span></p>
+                                                <p>Codigo: <span>4757</span></p>
+                                                <p>Fecha: <span>${fechaCompra}</span></p>
+                                            </div>
+                                            <!------------ LOS BOTONES DE ABAJO DEL MODAL ------------>
+                                            <div class="modal-footer">
+                                                <button type="button" class="${plato.idRegistro} btn btn-warning btn-imprimir" value="imprimir">Realizar pago</button>
+
+                                                <button type="button" class="${plato.idRegistro} btn btn-danger btn-cancelar" value="cancelar">Cancelar</button>
+
+                                                <button type="button" class="${plato.idRegistro} btn btn-secondary btn-rechazar" value="rechazar">Rechazado</button>
+
+                                                <button type="button" class="${plato.idRegistro} btn btn-success btn-completado" value="completado">Completado</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FINAL DEL MODAL -->
+                                </div> 
+                                <!-- FIN DE FILA TABLA -->                      
+                            `
+                        }
+                    })
+                    
+                })   
+
+                document.getElementById('tabla-historial-compras').innerHTML = htmlTablaClientes
+
+                // console.log(htmlTablaClientes)
+                // modificarEstadosCompra(datos,getRegistros)
+                // carrgarEstadoPedido(datos,getRegistros)
+                cargarEstadoPedido() 
+                modificarEstadosCompra()               
+            }
+        })
+
         elementoDiv.innerHTML =`
         <table class="table table-light">
             <thead>
@@ -467,62 +673,179 @@ function inyectarHtmlTab(tabActual){
                     <th scope="col">Usuario</th>
                     <th scope="col">Plato</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td><!-- INICIO DE HTML MODAL -->
-
-                        <!--------- ELEMENTO BOTON QUE ACTIVA EL MODAL -------->
-                        <!-------- data-bs-target="#infoCompra" AQUI INDICAS AL MODAL QUE APUNTAS O OBRAS ------>
-                        <a type="button" data-bs-toggle="modal" data-bs-target="#infoCompra">
-                            Nazario
-                        </a>
-                        
-                        <!-- -------EL MODAL A INVOCAR------- -->
-                        <!------ infoCompra, DEBE COINCIDIR CON EL MODAL QUE APUNTAS ARIBA ------->
-                        <div class="modal fade" id="infoCompra" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <!-- INDICAMOS LA POSOCION DEL MODAL -->
-                            <div class="modal-dialog  modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <!-------- TITULO DEL MODAL -------->
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Informacion de Compra</h1>
-                                        <!-------- RESERVADO PARA EL X DE CERRA ------>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <!---------- TODOS LOS DATOS QUE QUIERES PONER EL MODAL, AQUI VAN ------------>
-                                    <div class="modal-body">
-                                        <p>ID de Compra: <span>1X1XSS7</span></p>
-                                        <p>Plato: <span>Arroz Con Pollo</span></p>
-                                        <p>Pagado: <span>5.000FCFA</span></p>
-                                        <p>Tipo de Pago: <span>Tarjeta de Credito</span></p>
-                                        <p>Codigo: <span>4757</span></p>
-                                        <p>Fecha: <span>1-10-23</span></p>
-                                    </div>
-                                    <!------------ LOS BOTONES DE ABAJO DEL MODAL ------------>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Imprmir Factura</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-success">Completado</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FINAL DEL MODAL -->
-                    </td>
-                    <td>Arroz Con Pollo</td>
-                    <td>10-10-2023</td>
-                </tr>
+            <tbody id="tabla-historial-compras">
                 <!-- FIN DE FILA TABLA -->
             </tbody>
         </table>
-        <!-- FIN DE LA TABLA -->
-        `
+        ` 
+         //inyecta estado del pedido
+         function cargarEstadoPedido(){
+
+            // console.log(getEstadoPedido)
+            // console.log(getPlatosCliente)
+            
+            getPlatosCliente.forEach(plato =>{
+                // console.log(plato.idRegistro)
+                for(var i=0;i<getEstadoPedido.length;i++){
+
+                    if(plato.idRegistro == getEstadoPedido[i].id){
+
+                        if(getEstadoPedido[i].estado == undefined || getEstadoPedido[i].estado == 'proceso'){
+                            // console.log('estado-> undefined')
+
+                            document.getElementById(plato.idRegistro ).classList.add('estado-en-proceso');
+
+                            document.getElementById(plato.idRegistro ).innerHTML =`
+                                <span>En Proceso</span>
+                            `
+                        }
+
+                        if(getEstadoPedido[i].estado == 'completado'){
+                            // console.log('estado-> completado')
+
+                            document.getElementById(plato.idRegistro ).classList.add('estado-en-completado');
+
+                            document.getElementById(plato.idRegistro ).innerHTML =`
+                                <span>Completado</span>
+                            `
+                        }
+
+                        if(getEstadoPedido[i].estado == 'retirado'){
+                            // console.log('estado-> retirado')
+
+                            document.getElementById(plato.idRegistro ).classList.add('estado-en-retirado');
+
+                            document.getElementById(plato.idRegistro ).innerHTML =`
+                                <span>Retirado</span>
+                            `
+                        }
+
+                        if(getEstadoPedido[i].estado == 'cancelando'){
+                            // console.log('estado-> cancelando')
+
+                            document.getElementById(plato.idRegistro ).classList.add('estado-en-cancelando');
+
+                            document.getElementById(plato.idRegistro ).innerHTML =`
+                                <span>Cancelando</span>
+                            `
+                        }
+
+                        if(getEstadoPedido[i].estado == 'cancelado'){
+                            // console.log('estado-> cancelado')
+
+                            document.getElementById(plato.idRegistro ).classList.add('estado-en-cancelado');
+
+                            document.getElementById(plato.idRegistro ).innerHTML =`
+                                <span>Cancelado</span>
+                            `
+                        }
+                       
+                    }
+                }                
+            })           
+        } 
+
+        function modificarEstadosCompra() {
+            let btnImprimir = document.querySelectorAll('.btn-imprimir')         
+            let btnCancelar = document.querySelectorAll('.btn-cancelar')         
+            let btnRechazado = document.querySelectorAll('.btn-rechazar')         
+            let btnCompletado = document.querySelectorAll('.btn-completado') 
+
+            // console.log(btnImprimir)
+            btnImprimir.forEach(impresion => {//imprimir se da cuando ya se pago el pedido
+                impresion.addEventListener('click', ()=>{
+                    // console.log('imprimiendo')
+                    // console.log(btnCompletado.classList[0])
+                    // console.log(impresion.classList[0])
+                    cambiarEstadopedido(impresion.classList[0], 'retirado')
+                })
+            })
+
+            btnCancelar.forEach(cancelar => {
+                cancelar.addEventListener('click', ()=>{
+                    // console.log('cancelar')
+                    // console.log(btnCompletado.classList[0])
+                    // console.log(cancelar.classList[0])
+                    cambiarEstadopedido(cancelar.classList[0], 'cancelado')
+                })
+            })
+
+            btnRechazado.forEach(rechazar => {
+                rechazar.addEventListener('click', ()=>{
+                    //rechaza la peticion de cancelacion del usuario
+                    cambiarEstadopedido(rechazar.classList[0], 'proceso')
+                })
+            })
+
+            btnCompletado.forEach(completado => {
+                completado.addEventListener('click', ()=>{
+                    console.log('completar')
+                    // console.log(btnCompletado.classList[0])
+                    // console.log(completado.classList[0])
+                    cambiarEstadopedido(completado.classList[0], 'completado')
+                })
+            })
+        }
+
+    //funciona que actualizo los indicadores de estado del pedido
+    function cambiarEstadopedido(numRegistrado, estadoCompra){
+        //actualizar estado
+        // console.log(getPlatosCliente)
+
+        getPlatosCliente.forEach(pagoCompletado=>{
+            if(pagoCompletado.idRegistro == numRegistrado && pagoCompletado.completado == 'true'){
+                // console.log('este pedido ya fue procesado')
+                mostrarAlerta('error','ERROR: Este pedido ya fue completado y retirado')                
+            }
+            else if(pagoCompletado.idRegistro == numRegistrado && pagoCompletado.completado != 'false'){
+                if(confirm("Completar operacion?")){
+                    completandoProcesoDeCompra(numRegistrado, estadoCompra)
+                }
+            }
+        })
+
+        //solo se ejecutado si este pedido aun no se ha completado el pago y retiro
+    function completandoProcesoDeCompra(numRegistrado, estadoCompra){
+
+        updateDoc(doc(connFirestore,`public-db/YYKv1vbDdUWhvcEezFyx/registros`,numRegistrado), {estado:estadoCompra})
+
+        //si se pulsa el boton de "Realizar pago"
+        if(estadoCompra == 'retirado' || estadoCompra == 'cancelado'){
+            getPlatosCliente.forEach(valoracionPlato=>{                
+                if(valoracionPlato.idRegistro == numRegistrado){
+                    //si no se cancela la compra, incrementamos la el numero de compra
+                    if(estadoCompra != 'cancelado'){
+                         //incrementamos el contador de compra del plato
+                        updateDoc(doc(connFirestore,`lista-restaurantes/${valoracionPlato.restaurante}/sub-${valoracionPlato.restaurante}/cartas/sub-cartas`, valoracionPlato.idPlato),
+                        {total_pedidos:increment(1)}
+                        );
+                    }                  
+
+                    //indicamos que la compra se ha realizado o cancelado
+                    updateDoc(doc(connFirestore,`lista-restaurantes/${valoracionPlato.restaurante}/sub-${valoracionPlato.restaurante}/clientes/sub-clientes/${valoracionPlato.userName}/sub-${valoracionPlato.userName}`, numRegistrado),
+                        {completado:'true'}
+                    );
+
+                }
+            }) 
+            mostrarAlerta('success','Registro Completado') 
+        }
+        setTimeout(() => {
+            location.reload()
+         }, 2000);
     }
 
+        
+        // console.log('estado modificado')
+    }
+
+        
+
+    }
     // ----------------------------------------------------------------------------------------------------------------
     
     else if(tabActual === 'carta'){
@@ -549,8 +872,10 @@ function inyectarHtmlTab(tabActual){
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    else if(tabActual === 'subir-plato'){
-        
+    else if(tabActual === 'subir-plato'){   
+
+        console.log('leyendo')
+
         let guarnicion = `<option >Nada selecionado</option>`;
         let arrayGuarnicion = ['arroz', 'pan', 'yuca', 'platano', 'fufu', 'otro'];
 
@@ -596,10 +921,13 @@ function inyectarHtmlTab(tabActual){
         
             <button type="submit" class="btn btn-danger btn-carta" data-id="plato">Cargar</button>
         </form>
-        `
-
+        `        
     }
+}   
 
-}        
 
-  
+  function verificarDatosRestaurante(){
+    if(localStorage.getItem('datosRestauranteCache') == null){
+        location.href = './administracion.html?selec=home'
+    }
+  }

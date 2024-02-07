@@ -137,7 +137,7 @@ function verResultadosBusquedaMovil(){
             //caputamos valor del input
             const inputComida = document.querySelector('.input-comida')
     
-            location.href=`./resultados-busqueda.html?plato=${inputComida.value}`
+            location.href=`./resultados-busqueda.html?plato=${inputComida.value.toLowerCase()}`
     
         })
     }    
