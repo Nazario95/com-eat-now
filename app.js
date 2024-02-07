@@ -99,7 +99,7 @@ function capturarpedidosUsuario(){
 
     restaurantesUsuario.forEach(historiaRetsurante =>{
          const historiaCompra = async ()=>{       
-            const capturarHistoria = await getDocs(collection(db,`lista-restaurantes/${historiaRetsurante}/sub-${historiaRetsurante}/clientes/${localStorage.getItem('sesion')}`))
+            const capturarHistoria = await getDocs(collection(db,`lista-restaurantes/${historiaRetsurante}/sub-${historiaRetsurante}/clientes/sub-clientes/${localStorage.getItem('sesion')}/sub-${localStorage.getItem('sesion')}`))
 
             capturarHistoria.forEach(dato => {
                 // console.log(dato.data())
@@ -175,10 +175,9 @@ function nombresComidaHistorial(informacionPlato){
                 //eliminamos estado predeterminado
                 document.getElementById(`estado-pedido-${fechaPlato.data().id}`).classList.remove('estado-en-proceso')
                 //agregamos el estado guardado en servidor
-                document.getElementById(`estado-pedido-${fechaPlato.data().id}`).classList.add(fechaPlato.data().estado)
+                document.getElementById(`estado-pedido-${fechaPlato.data().id}`).classList.add(`estado-en-${fechaPlato.data().estado}`)
 
                 // console.log(fechaPlato.data().id)
-
                 if(fechaPlato.data().estado.includes('completado')){
                     document.getElementById(`estado-pedido-${fechaPlato.data().id}`).textContent = 'Tu Pedido Esta Listo'
                     //ocultar el boton de cancelar tras completar el pedido
@@ -216,11 +215,11 @@ function cancelarPedido(){
             
             if(brnCancelar.classList[5]=='deshacer'){
                 // console.log('deshaciendo')        
-                var estado = 'estado-en-proceso'
+                var estado = 'proceso'
             }
             else{
                 // console.log(brnCancelar.classList) 
-                var estado = 'estado-en-cancelando'
+                var estado = 'cancelando'
             }
                        
             actualizarEstadoPedido(brnCancelar.id, estado)
@@ -268,7 +267,7 @@ function templetePrincipal(){
     const footer = document.querySelector('footer');
 
     head.innerHTML = componentes.head;
-    
+
     // LOGIN.HTML --------------------------------------------
     if(location.pathname !=`${rutaPricipal}index.html` && location.pathname !=rutaPricipal){
         //ocultar componentes del header para pagina "/login.html"

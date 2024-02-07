@@ -112,26 +112,58 @@
       </div><!-- menu-hamburguesa -->
     </div><!-- . End Nav-bar -->
       
-      <div id="carouselExample" class="carousel slide shadow-sm p-1 mb-5">
-          <div class="carousel-inner">
-              <div class="carousel-item active">
-                  <img src="./src/img/0.png" class="d-block w-100 img-fluid">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5>PIDE TU CENA AQUI</h5>
-                    <p>El mejor servicio de pedido de comida a domicilio online</p>
-                  </div>
-              </div>
+      <div class="carrusel-header">
+        <div id="carouselExampleCaptions" class="carousel slide">
+
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
-          
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+
+          <!-- contenedor-img-carrusel -->
+          <div class="carousel-inner">
+
+            <!-- componente-img-carrusel-1 -->
+            <div class="carousel-item active"> 
+              <img src="./src/img/header/imghd0new.png" class="d-block w-100" alt="...">
+              <div class="carousel-caption  d-md-block">
+                <h5 class="text-white admin-bg">La unica plataforma que engloba todos los lugares de ocio de Guinea Ecuatorial</h5>
+                <p class="text-white admin-bg">Te apetece probar algo nuevo, buscalo aqui</p>
+              </div>
+            </div>
+
+             <!-- componente-img-carrusel-2 -->
+            <div class="carousel-item">
+              <img src="./src/img/header/imghd1new.png" class="d-block w-100" alt="...">
+              <div class="carousel-caption d-md-block">
+                <h5 class="text-white admin-bg">Tienes un negocio y quieres ganar mas clientela?</h5>
+                <p class="text-white admin-bg">Registrar tu negocio aqui y gana mas visitas en tu restaurante</p>
+              </div>
+            </div>
+
+             <!-- componente-img-carrusel-3 -->
+            <div class="carousel-item">
+              <img src="./src/img/header/imghd2new.png" class="d-block w-100" alt="...">
+              <div class="carousel-caption  d-md-block">
+                <h5 class="text-white admin-bg">La unica plataforma que interconecta al cliente y al restaurante</h5>
+                <p class="text-white admin-bg">No importa que parte del territorio nacional te encuentres, encuentra lo que buscas aqui segun la zona en la que te encuentres</p>
+              </div>
+            </div>
+
+          </div><!-- fin. contenedor-carrusel-img -->
+          <!-- botones- carusell -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden"></span>
+            <span class="visually-hidden">Atras</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">Delante</span>
           </button>
-      </div><!--. End, carusell header  -->
+          <!-- fin-botones-atras-delante -->
+        </div>
+      </div><!--. fin, carusell header  -->
 
         <div class="search-foot ">
           <h2 class=" fs-1 fw-bolder">PIDE TU COMIDA A DOMICILIO</h2>
